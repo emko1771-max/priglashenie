@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-palette="warm">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{COUPLE_NAMES}} Wedding Invitation">
+  <meta name="theme-color" content="#4A2C2A">
+  <title>{{COUPLE_NAMES}} - Wedding Invitation</title>
+  <link rel="icon" href="{{FAVICON}}" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="../css/design-tokens.css">
+  <link rel="preload" as="style" href="../css/colors.css">
+  <link rel="preload" as="style" href="../css/typography.css">
+  <link rel="preload" as="style" href="../css/spacing.css">
+  <link rel="preload" as="style" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/design-tokens.css">
+  <link rel="stylesheet" href="../css/colors.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/spacing.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../../rtl.css">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Early RTL detection to prevent flash
+    (function() {
+      var stored = localStorage.getItem('wedding-rtl');
+      if (stored === 'true') {
+        document.documentElement.dir = 'rtl';
+        document.documentElement.lang = 'ar';
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Reduced motion indicator -->
+  <div id="reduced-motion-indicator" class="visually-hidden" aria-live="polite"></div>
+
+  <!-- Ambient petal particle canvas container -->
+  <div id="ambient-container" class="ambient-container" aria-hidden="true"></div>
+
+  <!-- Envelope Scene - Intro Sequence -->
+  <section class="envelope-scene" role="region" aria-label="Wedding invitation envelope" data-intro-step="1">
+    <div class="envelope" data-animation="none">
+      <div class="envelope-body" aria-hidden="true"></div>
+      <div class="envelope-flap" style="transform-origin: top right;" aria-hidden="true">
+        <div class="wax-seal" aria-hidden="true">
+          <svg class="seal-monogram" viewBox="0 0 120 120" aria-hidden="true" role="img" aria-label="{{LOGO_MONOGRAM}}">
+            {{LOGO_MONOGRAM}}
+          </svg>
+        </div>
+        <div class="flap-monogram font-feature-swash" aria-hidden="true">{{COUPLE_NAMES}}</div>
+      </div>
+      <div class="letter" style="opacity: 0; transform: translateY(20px);" role="region" aria-label="Wedding invitation letter">
+        <div class="letter-content stagger-children" style="--stagger-base: 80ms;">
+          <!-- Cover Section -->
+          <section class="cover-section reveal reveal-up" data-section="cover" data-stagger-index="0">
+            <figure class="cover-photo">
+              <img src="assets/cover-placeholder.webp" alt="{{COUPLE_NAMES}} wedding venue" loading="eager" width="800" height="1200">
+              <figcaption class="visually-hidden">{{VENUE_NAME}}</figcaption>
+            </figure>
+            <div class="cover-overlay">
+              <div class="couple-names font-feature-elegant font-feature-swash display-xl">
+                <span class="name-1">{{COUPLE_NAME_1}}</span>
+                <span class="ampersand" aria-hidden="true">&</span>
+                <span class="name-2">{{COUPLE_NAME_2}}</span>
+              </div>
+              <hr class="divider divider-floral" aria-hidden="true">
+              <time class="wedding-date text-heading-md" datetime="{{WEDDING_DATE_ISO}}">{{WEDDING_DATE}}</time>
+              <address class="venue-name text-body-lg">{{VENUE_NAME}}<br>{{VENUE_ADDRESS}}</address>
+            </div>
+            <div class="floral-corner floral-corner--tl" aria-hidden="true">
+              <img src="assets/floral-corner-tl.svg" alt="">
+            </div>
+            <div class="floral-corner floral-corner--tr" aria-hidden="true">
+              <img src="assets/floral-corner-tr.svg" alt="">
+            </div>
+          </section>
+
+          <!-- Names Section -->
+          <section class="names-section reveal reveal-up" data-section="names" data-stagger-index="1">
+            <div class="couple-names-large font-feature-elegant font-feature-swash display-lg text-center">
+              <span class="name-1">{{COUPLE_NAME_1}}</span>
+              <span class="conjunction" aria-hidden="true">&</span>
+              <span class="name-2">{{COUPLE_NAME_2}}</span>
+            </div>
+            <hr class="divider divider-ornate" aria-hidden="true">
+            <p class="invitation-text text-body-lg text-center">{{INVITATION_TEXT}}</p>
+          </section>
+
+          <!-- Date & Venue Section -->
+          <section class="date-venue-section reveal reveal-up" data-section="date-venue" data-stagger-index="2">
+            <div class="detail-row inline gap-6 justify-center flex-wrap">
+              <div class="detail-item inline gap-2 items-center">
+                <svg class="icon-calendar flip-horizontal-rtl" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+                  <path d="M17 21h-6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2zm-4-6V10a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v5"/>
+                </svg>
+                <time class="wedding-time text-heading-sm" datetime="{{WEDDING_TIME_ISO}}">{{WEDDING_TIME}}</time>
+              </div>
+              <div class="detail-item inline gap-2 items-center">
+                <svg class="icon-location flip-horizontal-rtl" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <address class="venue-detail text-body-md">{{VENUE_NAME}}<br>{{VENUE_ADDRESS}}</address>
+              </div>
+            </div>
+            <hr class="divider divider-floral" aria-hidden="true">
+          </section>
+
+          <!-- Personal Message Section -->
+          <section class="message-section reveal reveal-up" data-section="message" data-stagger-index="3">
+            <blockquote class="invitation-verse stagger-children" data-stagger-base="100ms">
+              <p class="text-body-lg">{{PERSONAL_MESSAGE_P1}}</p>
+              <p class="text-body-lg">{{PERSONAL_MESSAGE_P2}}</p>
+              <cite class="text-body-md">- {{COUPLE_NAMES}}</cite>
+            </blockquote>
+            <hr class="divider divider-ornate" aria-hidden="true">
+          </section>
+
+          <!-- Photo Gallery Section -->
+          <section class="gallery-section reveal reveal-up" data-section="gallery" data-stagger-index="4">
+            <h2 class="section-title text-heading-lg text-center mb-6">{{GALLERY_TITLE}}</h2>
+            <div class="gallery grid-auto-fit gap-4 stagger-children" data-stagger-base="150ms" role="list" aria-label="Wedding photo gallery">
+              <!-- Demo placeholder (CMS will replace with actual images) -->
+              <figure class="gallery-item reveal-interactive" data-lightbox role="listitem">
+                <img class="gallery-image" src="assets/gallery-placeholder.webp" alt="{{COUPLE_NAMES}} wedding moment" loading="lazy" width="400" height="400">
+                <figcaption class="gallery-caption text-label-sm text-center">{{GALLERY_CAPTION_1}}</figcaption>
+                <div class="gallery-overlay" aria-hidden="true">
+                  <svg class="icon-zoom flip-horizontal-rtl" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                  </svg>
+                </div>
+              </figure>
+            </div>
+          </section>
+
+          <!-- Celebration Schedule Section -->
+          <section class="schedule-section reveal reveal-up" data-section="schedule" data-stagger-index="5">
+            <h2 class="section-title text-heading-lg text-center mb-6">{{SCHEDULE_TITLE}}</h2>
+            <div class="schedule-accordion stagger-children" data-stagger-base="100ms">
+              <!-- Demo placeholder (CMS will replace with actual events) -->
+              <details class="schedule-card">
+                <summary class="schedule-summary inline gap-4 items-center p-4 cursor-pointer">
+                  <time class="schedule-time text-heading-sm font-mono tabular-nums" datetime="16:00">4:00 PM</time>
+                  <span class="schedule-title text-body-lg flex-1">Ceremony Begins</span>
+                  <svg class="schedule-chevron flip-horizontal-rtl" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+                    <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                <div class="schedule-details p-4 pt-0">
+                  <p class="schedule-description text-body-md">Join us for the wedding ceremony in the garden pavilion.</p>
+                  <address class="schedule-location inline gap-2 items-center text-body-sm text-muted">
+                    <svg class="icon-location flip-horizontal-rtl" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                      <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    Garden Pavilion
+                  </address>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <!-- RSVP Section -->
+          <section class="rsvp-section reveal reveal-up" data-section="rsvp" data-stagger-index="6">
+            <h2 class="section-title text-heading-lg text-center mb-6">{{RSVP_TITLE}}</h2>
+            <form class="rsvp-form stagger-children" data-stagger-base="75ms" novalidate>
+              {{RSVP_FORM}}
+              <button type="submit" class="btn btn-primary inline gap-2 items-center justify-center mt-4">
+                <svg class="icon-send flip-horizontal-rtl" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-4-9-6-6z"/>
+                </svg>
+                <span>{{RSVP_SUBMIT_TEXT}}</span>
+              </button>
+              <div class="rsvp-status visually-hidden" aria-live="polite" aria-atomic="true"></div>
+            </form>
+            <div class="floral-corner floral-corner--bl" aria-hidden="true">
+              <img src="assets/floral-corner-bl.svg" alt="">
+            </div>
+            <div class="floral-corner floral-corner--br" aria-hidden="true">
+              <img src="assets/floral-corner-br.svg" alt="">
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox for Gallery -->
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo gallery" hidden>
+    <div class="lightbox-backdrop" tabindex="-1"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Close lightbox">
+        <svg class="icon-close no-flip-rtl" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <button class="lightbox-prev" aria-label="Previous photo">
+        <svg class="icon-prev flip-horizontal-rtl" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <figure>
+        <img class="lightbox-image" src="" alt="">
+        <figcaption class="lightbox-caption text-body-sm text-center mt-2"></figcaption>
+      </figure>
+      <button class="lightbox-next" aria-label="Next photo">
+        <svg class="icon-next flip-horizontal-rtl" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Sparkle burst container -->
+  <div id="sparkle-container" class="sparkle-container" aria-hidden="true"></div>
+
+  <!-- RTL Toggle (for demo) -->
+  <button id="rtl-toggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle RTL">
+    <span class="rtl-text-ltr">العربية</span>
+    <span class="rtl-text-rtl visually-hidden">English</span>
+  </button>
+
+  <!-- Scripts -->
+  <script src="../../js/scroll-reveal.js"></script>
+  <script src="../../js/intro-sequence.js"></script>
+  <script src="../../js/ambient.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

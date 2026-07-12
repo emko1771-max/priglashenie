@@ -1,0 +1,571 @@
+/**
+ * Wedding Invitation Design System - CSS Custom Properties
+ * Generated from DESIGN.md - Do not edit directly; edit DESIGN.md and regenerate.
+ * Version: alpha
+ */
+
+:root {
+  /* ==========================================================================
+     COLOR PALETTES - Three wedding personalities with dark-mode variants
+     ========================================================================== */
+
+  /* ── Warm Palette (Classic Romance) ────────────────────────────────────── */
+  --color-warm-primary: #4A2C2A;
+  --color-warm-secondary: #8B6914;
+  --color-warm-tertiary: #C9A962;
+  --color-warm-surface: #FDF8F3;
+  --color-warm-surface-elevated: #FFFFFF;
+  --color-warm-on-primary: #FFFFFF;
+  --color-warm-on-secondary: #FFFFFF;
+  --color-warm-on-tertiary: #2D1B1A;
+  --color-warm-on-surface: #2D1B1A;
+  --color-warm-border: #E8D5C4;
+  --color-warm-border-strong: #C9A962;
+
+  /* ── Cool Palette (Modern Elegance) ────────────────────────────────────── */
+  --color-cool-primary: #1B3A4B;
+  --color-cool-secondary: #2A6B7B;
+  --color-cool-tertiary: #4EC0CA;
+  --color-cool-surface: #F0F7F8;
+  --color-cool-surface-elevated: #FFFFFF;
+  --color-cool-on-primary: #FFFFFF;
+  --color-cool-on-secondary: #FFFFFF;
+  --color-cool-on-tertiary: #0D1F26;
+  --color-cool-on-surface: #0D1F26;
+  --color-cool-border: #CDE8EC;
+  --color-cool-border-strong: #4EC0CA;
+
+  /* ── Neutral Palette (Timeless Minimal) ────────────────────────────────── */
+  --color-neutral-primary: #1A1A2E;
+  --color-neutral-secondary: #3D3D5C;
+  --color-neutral-tertiary: #8B8B8B;
+  --color-neutral-surface: #FAFAFA;
+  --color-neutral-surface-elevated: #FFFFFF;
+  --color-neutral-on-primary: #FFFFFF;
+  --color-neutral-on-secondary: #FFFFFF;
+  --color-neutral-on-tertiary: #1A1A2E;
+  --color-neutral-on-surface: #1A1A2E;
+  --color-neutral-border: #E8E8E8;
+  --color-neutral-border-strong: #8B8B8B;
+
+  /* ── Dark Mode - Warm ──────────────────────────────────────────────────── */
+  --color-dark-warm-primary: #F5E6D3;
+  --color-dark-warm-secondary: #D4B876;
+  --color-dark-warm-tertiary: #C9A962;
+  --color-dark-warm-surface: #1F1815;
+  --color-dark-warm-surface-elevated: #2D231E;
+  --color-dark-warm-on-primary: #2D1B1A;
+  --color-dark-warm-on-secondary: #2D1B1A;
+  --color-dark-warm-on-tertiary: #2D1B1A;
+  --color-dark-warm-on-surface: #F5E6D3;
+  --color-dark-warm-border: #3D2F28;
+  --color-dark-warm-border-strong: #C9A962;
+
+  /* ── Dark Mode - Cool ──────────────────────────────────────────────────── */
+  --color-dark-cool-primary: #E0F4F7;
+  --color-dark-cool-secondary: #8EE3EB;
+  --color-dark-cool-tertiary: #4EC0CA;
+  --color-dark-cool-surface: #0A161A;
+  --color-dark-cool-surface-elevated: #122830;
+  --color-dark-cool-on-primary: #0D1F26;
+  --color-dark-cool-on-secondary: #0D1F26;
+  --color-dark-cool-on-tertiary: #0D1F26;
+  --color-dark-cool-on-surface: #E0F4F7;
+  --color-dark-cool-border: #1A3A44;
+  --color-dark-cool-border-strong: #4EC0CA;
+
+  /* ── Dark Mode - Neutral ───────────────────────────────────────────────── */
+  --color-dark-neutral-primary: #E8E8F0;
+  --color-dark-neutral-secondary: #B8B8CC;
+  --color-dark-neutral-tertiary: #8B8B8B;
+  --color-dark-neutral-surface: #0D0D1A;
+  --color-dark-neutral-surface-elevated: #1A1A2E;
+  --color-dark-neutral-on-primary: #1A1A2E;
+  --color-dark-neutral-on-secondary: #1A1A2E;
+  --color-dark-neutral-on-tertiary: #1A1A2E;
+  --color-dark-neutral-on-surface: #E8E8F0;
+  --color-dark-neutral-border: #2D2D44;
+  --color-dark-neutral-border-strong: #8B8B8B;
+
+  /* ==========================================================================
+     SEMANTIC COLOR TOKENS - Map to active palette at runtime
+     Update these 10 tokens to switch palettes globally
+     ========================================================================== */
+  --color-primary: var(--color-warm-primary);
+  --color-secondary: var(--color-warm-secondary);
+  --color-tertiary: var(--color-warm-tertiary);
+  --color-surface: var(--color-warm-surface);
+  --color-surface-elevated: var(--color-warm-surface-elevated);
+  --color-on-primary: var(--color-warm-on-primary);
+  --color-on-secondary: var(--color-warm-on-secondary);
+  --color-on-tertiary: var(--color-warm-on-tertiary);
+  --color-on-surface: var(--color-warm-on-surface);
+  --color-border: var(--color-warm-border);
+  --color-border-strong: var(--color-warm-border-strong);
+
+  /* RGB channels for tinted shadows / gradients (update with palette) */
+  --color-primary-rgb: 74, 44, 42;
+  --color-secondary-rgb: 139, 105, 20;
+  --color-tertiary-rgb: 201, 169, 98;
+  --color-on-surface-rgb: 45, 27, 26;
+
+  /* ==========================================================================
+     TYPOGRAPHY - Font Families
+     ========================================================================== */
+  --font-family-display: "Playfair Display", Georgia, serif;
+  --font-family-display-alt: "Cormorant Garamond", Georgia, serif;
+  --font-family-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-body-alt: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-arabic: "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-family-arabic-display: "Amiri", "Noto Sans Arabic", serif;
+  --font-family-arabic-alt: "Cairo", "Noto Sans Arabic", sans-serif;
+
+  /* ==========================================================================
+     FLUID TYPOGRAPHY SCALE - clamp(min, preferred, max)
+     ========================================================================== */
+
+  /* Latin Display */
+  --text-display-xl: clamp(2.5rem, 5vw + 1rem, 5rem);
+  --text-display-lg: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+  --text-display-md: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+  --text-display-sm: clamp(1.5rem, 2.5vw + 0.5rem, 2rem);
+
+  /* Latin Heading */
+  --text-heading-xl: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+  --text-heading-lg: clamp(1.5rem, 2.5vw + 0.5rem, 2rem);
+  --text-heading-md: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+  --text-heading-sm: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
+
+  /* Latin Body */
+  --text-body-lg: clamp(1.125rem, 1vw + 0.75rem, 1.25rem);
+  --text-body-md: clamp(1rem, 0.875vw + 0.75rem, 1.125rem);
+  --text-body-sm: clamp(0.875rem, 0.75vw + 0.75rem, 1rem);
+
+  /* Latin Label */
+  --text-label-lg: clamp(0.875rem, 0.75vw + 0.75rem, 1rem);
+  --text-label-md: clamp(0.8125rem, 0.625vw + 0.7rem, 0.9375rem);
+  --text-label-sm: clamp(0.75rem, 0.5vw + 0.65rem, 0.875rem);
+
+  /* Arabic Display */
+  --text-arabic-display-xl: clamp(2.5rem, 5vw + 1rem, 5rem);
+  --text-arabic-display-lg: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+  --text-arabic-display-md: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+  --text-arabic-display-sm: clamp(1.5rem, 2.5vw + 0.5rem, 2rem);
+
+  /* Arabic Heading */
+  --text-arabic-heading-xl: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+  --text-arabic-heading-lg: clamp(1.5rem, 2.5vw + 0.5rem, 2rem);
+  --text-arabic-heading-md: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+  --text-arabic-heading-sm: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
+
+  /* Arabic Body */
+  --text-arabic-body-lg: clamp(1.125rem, 1vw + 0.75rem, 1.25rem);
+  --text-arabic-body-md: clamp(1rem, 0.875vw + 0.75rem, 1.125rem);
+  --text-arabic-body-sm: clamp(0.875rem, 0.75vw + 0.75rem, 1rem);
+
+  /* Arabic Label */
+  --text-arabic-label-lg: clamp(0.875rem, 0.75vw + 0.75rem, 1rem);
+  --text-arabic-label-md: clamp(0.8125rem, 0.625vw + 0.7rem, 0.9375rem);
+  --text-arabic-label-sm: clamp(0.75rem, 0.5vw + 0.65rem, 0.875rem);
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.2;
+  --line-height-normal: 1.3;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
+  --line-height-arabic-body: 1.75;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-snug: -0.015em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+  --letter-spacing-wider: 0.03em;
+  --letter-spacing-widest: 0.04em;
+  --letter-spacing-caps: 0.08em;
+
+  /* ==========================================================================
+     SPACING - 4px base scale + fluid variants
+     ========================================================================== */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Fluid Spacing */
+  --space-fluid-xs: clamp(8px, 1vw, 16px);
+  --space-fluid-sm: clamp(12px, 1.5vw, 24px);
+  --space-fluid-md: clamp(16px, 2vw, 32px);
+  --space-fluid-lg: clamp(24px, 3vw, 48px);
+  --space-fluid-xl: clamp(32px, 4vw, 64px);
+  --space-fluid-2xl: clamp(48px, 6vw, 96px);
+  --space-fluid-3xl: clamp(64px, 8vw, 128px);
+
+  /* Layout Helpers */
+  --section-padding: var(--space-fluid-lg);
+  --section-gap: var(--space-fluid-xl);
+  --card-padding: var(--space-6);
+  --card-gap: var(--space-4);
+
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1440px;
+  --container-full: 100%;
+
+  /* Breakpoints (for reference in JS / media queries) */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --bp-2xl: 1440px;
+
+  /* ==========================================================================
+     BORDER RADIUS
+     ========================================================================== */
+  --rounded-none: 0;
+  --rounded-sm: 4px;
+  --rounded-md: 8px;
+  --rounded-lg: 12px;
+  --rounded-xl: 16px;
+  --rounded-2xl: 24px;
+  --rounded-full: 9999px;
+  --rounded-pill: 9999px;
+  --rounded-ornament: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  --rounded-flourish: 30% 70% 70% 30% / 30% 30% 70% 70%;
+
+  /* ==========================================================================
+     ELEVATION / SHADOWS
+     ========================================================================== */
+  --elevation-none: none;
+  --elevation-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --elevation-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --elevation-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --elevation-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --elevation-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --elevation-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --elevation-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* Wedding-specific */
+  --elevation-card: 0 2px 8px 0 rgb(0 0 0 / 0.06), 0 1px 3px 0 rgb(0 0 0 / 0.04);
+  --elevation-card-hover: 0 8px 24px 0 rgb(0 0 0 / 0.1), 0 4px 12px 0 rgb(0 0 0 / 0.06);
+  --elevation-floating: 0 20px 40px -10px rgb(0 0 0 / 0.15);
+  --elevation-modal: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  /* ==========================================================================
+     MOTION - Duration, Easing, Keyframes
+     ========================================================================== */
+
+  /* Durations */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+  --duration-slowest: 700ms;
+  --duration-ambient: 3000ms;
+  --duration-ambient-slow: 6000ms;
+
+  /* Easing */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-elegant: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce-subtle: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Composite Animation Tokens */
+  --animation-entrance-fade: var(--duration-normal) var(--ease-out) forwards;
+  --animation-entrance-slide-up: var(--duration-slow) var(--ease-gentle) forwards;
+  --animation-entrance-scale: var(--duration-normal) var(--ease-spring) forwards;
+  --animation-entrance-reveal: var(--duration-slower) var(--ease-elegant) forwards;
+  --animation-scroll-reveal: var(--duration-slower) var(--ease-gentle) forwards;
+  --animation-hover-lift: var(--duration-fast) var(--ease-out) forwards;
+  --animation-hover-scale: var(--duration-fast) var(--ease-out) forwards;
+  --animation-hover-glow: var(--duration-normal) var(--ease-out) forwards;
+  --animation-press: var(--duration-instant) var(--ease-in) forwards;
+  --animation-ambient-float: var(--duration-ambient) var(--ease-in-out) infinite;
+  --animation-ambient-float-slow: var(--duration-ambient-slow) var(--ease-in-out) infinite;
+  --animation-ambient-pulse: var(--duration-ambient) var(--ease-in-out) infinite;
+  --animation-ambient-rotate: var(--duration-ambient-slow) var(--ease-linear) infinite;
+  --animation-ambient-gradient: var(--duration-ambient-slow) var(--ease-in-out) infinite;
+  --animation-ambient-sparkle: var(--duration-slower) var(--ease-in-out) infinite;
+  --animation-ambient-breathe: var(--duration-ambient) var(--ease-in-out) infinite;
+
+  /* Stagger Delays */
+  --stagger-base: 50ms;
+  --stagger-sm: 75ms;
+  --stagger-md: 100ms;
+  --stagger-lg: 150ms;
+  --stagger-xl: 200ms;
+
+  /* Reduced Motion */
+  --reduce-motion-duration: 0.01ms;
+  --reduce-motion-iteration: 1;
+
+  /* ==========================================================================
+     Z-INDEX SCALE
+     ========================================================================== */
+  --z-index-hide: -1;
+  --z-index-base: 0;
+  --z-index-dropdown: 100;
+  --z-index-sticky: 200;
+  --z-index-fixed: 300;
+  --z-index-modal-backdrop: 400;
+  --z-index-modal: 500;
+  --z-index-popover: 600;
+  --z-index-tooltip: 700;
+  --z-index-toast: 800;
+}
+
+/* ==========================================================================
+   PALETTE SWITCHING - Apply data-palette attribute to <html> or container
+   ========================================================================== */
+
+[data-palette="warm"] {
+  --color-primary: var(--color-warm-primary);
+  --color-secondary: var(--color-warm-secondary);
+  --color-tertiary: var(--color-warm-tertiary);
+  --color-surface: var(--color-warm-surface);
+  --color-surface-elevated: var(--color-warm-surface-elevated);
+  --color-on-primary: var(--color-warm-on-primary);
+  --color-on-secondary: var(--color-warm-on-secondary);
+  --color-on-tertiary: var(--color-warm-on-tertiary);
+  --color-on-surface: var(--color-warm-on-surface);
+  --color-border: var(--color-warm-border);
+  --color-border-strong: var(--color-warm-border-strong);
+  --color-primary-rgb: 74, 44, 42;
+  --color-secondary-rgb: 139, 105, 20;
+  --color-tertiary-rgb: 201, 169, 98;
+  --color-on-surface-rgb: 45, 27, 26;
+}
+
+[data-palette="cool"] {
+  --color-primary: var(--color-cool-primary);
+  --color-secondary: var(--color-cool-secondary);
+  --color-tertiary: var(--color-cool-tertiary);
+  --color-surface: var(--color-cool-surface);
+  --color-surface-elevated: var(--color-cool-surface-elevated);
+  --color-on-primary: var(--color-cool-on-primary);
+  --color-on-secondary: var(--color-cool-on-secondary);
+  --color-on-tertiary: var(--color-cool-on-tertiary);
+  --color-on-surface: var(--color-cool-on-surface);
+  --color-border: var(--color-cool-border);
+  --color-border-strong: var(--color-cool-border-strong);
+  --color-primary-rgb: 27, 58, 75;
+  --color-secondary-rgb: 42, 107, 123;
+  --color-tertiary-rgb: 78, 192, 202;
+  --color-on-surface-rgb: 13, 31, 38;
+}
+
+[data-palette="neutral"] {
+  --color-primary: var(--color-neutral-primary);
+  --color-secondary: var(--color-neutral-secondary);
+  --color-tertiary: var(--color-neutral-tertiary);
+  --color-surface: var(--color-neutral-surface);
+  --color-surface-elevated: var(--color-neutral-surface-elevated);
+  --color-on-primary: var(--color-neutral-on-primary);
+  --color-on-secondary: var(--color-neutral-on-secondary);
+  --color-on-tertiary: var(--color-neutral-on-tertiary);
+  --color-on-surface: var(--color-neutral-on-surface);
+  --color-border: var(--color-neutral-border);
+  --color-border-strong: var(--color-neutral-border-strong);
+  --color-primary-rgb: 26, 26, 46;
+  --color-secondary-rgb: 61, 61, 92;
+  --color-tertiary-rgb: 139, 139, 139;
+  --color-on-surface-rgb: 26, 26, 46;
+}
+
+/* Dark mode variants */
+[data-palette="warm"][data-theme="dark"],
+[data-theme="dark"][data-palette="warm"] {
+  --color-primary: var(--color-dark-warm-primary);
+  --color-secondary: var(--color-dark-warm-secondary);
+  --color-tertiary: var(--color-dark-warm-tertiary);
+  --color-surface: var(--color-dark-warm-surface);
+  --color-surface-elevated: var(--color-dark-warm-surface-elevated);
+  --color-on-primary: var(--color-dark-warm-on-primary);
+  --color-on-secondary: var(--color-dark-warm-on-secondary);
+  --color-on-tertiary: var(--color-dark-warm-on-tertiary);
+  --color-on-surface: var(--color-dark-warm-on-surface);
+  --color-border: var(--color-dark-warm-border);
+  --color-border-strong: var(--color-dark-warm-border-strong);
+  --color-primary-rgb: 245, 230, 211;
+  --color-secondary-rgb: 212, 184, 118;
+  --color-tertiary-rgb: 201, 169, 98;
+  --color-on-surface-rgb: 245, 230, 211;
+}
+
+[data-palette="cool"][data-theme="dark"],
+[data-theme="dark"][data-palette="cool"] {
+  --color-primary: var(--color-dark-cool-primary);
+  --color-secondary: var(--color-dark-cool-secondary);
+  --color-tertiary: var(--color-dark-cool-tertiary);
+  --color-surface: var(--color-dark-cool-surface);
+  --color-surface-elevated: var(--color-dark-cool-surface-elevated);
+  --color-on-primary: var(--color-dark-cool-on-primary);
+  --color-on-secondary: var(--color-dark-cool-on-secondary);
+  --color-on-tertiary: var(--color-dark-cool-on-tertiary);
+  --color-on-surface: var(--color-dark-cool-on-surface);
+  --color-border: var(--color-dark-cool-border);
+  --color-border-strong: var(--color-dark-cool-border-strong);
+  --color-primary-rgb: 224, 244, 247;
+  --color-secondary-rgb: 142, 227, 235;
+  --color-tertiary-rgb: 78, 192, 202;
+  --color-on-surface-rgb: 224, 244, 247;
+}
+
+[data-palette="neutral"][data-theme="dark"],
+[data-theme="dark"][data-palette="neutral"] {
+  --color-primary: var(--color-dark-neutral-primary);
+  --color-secondary: var(--color-dark-neutral-secondary);
+  --color-tertiary: var(--color-dark-neutral-tertiary);
+  --color-surface: var(--color-dark-neutral-surface);
+  --color-surface-elevated: var(--color-dark-neutral-surface-elevated);
+  --color-on-primary: var(--color-dark-neutral-on-primary);
+  --color-on-secondary: var(--color-dark-neutral-on-secondary);
+  --color-on-tertiary: var(--color-dark-neutral-on-tertiary);
+  --color-on-surface: var(--color-dark-neutral-on-surface);
+  --color-border: var(--color-dark-neutral-border);
+  --color-border-strong: var(--color-dark-neutral-border-strong);
+  --color-primary-rgb: 232, 232, 240;
+  --color-secondary-rgb: 184, 184, 204;
+  --color-tertiary-rgb: 139, 139, 139;
+  --color-on-surface-rgb: 232, 232, 240;
+}
+
+/* System preference dark mode (when no explicit data-theme) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-primary: var(--color-dark-warm-primary);
+    --color-secondary: var(--color-dark-warm-secondary);
+    --color-tertiary: var(--color-dark-warm-tertiary);
+    --color-surface: var(--color-dark-warm-surface);
+    --color-surface-elevated: var(--color-dark-warm-surface-elevated);
+    --color-on-primary: var(--color-dark-warm-on-primary);
+    --color-on-secondary: var(--color-dark-warm-on-secondary);
+    --color-on-tertiary: var(--color-dark-warm-on-tertiary);
+    --color-on-surface: var(--color-dark-warm-on-surface);
+    --color-border: var(--color-dark-warm-border);
+    --color-border-strong: var(--color-dark-warm-border-strong);
+    --color-primary-rgb: 245, 230, 211;
+    --color-secondary-rgb: 212, 184, 118;
+    --color-tertiary-rgb: 201, 169, 98;
+    --color-on-surface-rgb: 245, 230, 211;
+  }
+}
+
+/* ==========================================================================
+   RTL / ARABIC SUPPORT - Logical properties + font switching
+   ========================================================================== */
+
+:root {
+  /* Logical property fallbacks for older browsers */
+  --margin-inline-start: margin-left;
+  --margin-inline-end: margin-right;
+  --padding-inline-start: padding-left;
+  --padding-inline-end: padding-right;
+  --border-inline-start: border-left;
+  --border-inline-end: border-right;
+}
+
+/* RTL root - apply dir="rtl" lang="ar" on <html> */
+html[dir="rtl"] {
+  /* Logical properties are natively supported in modern browsers */
+  /* These custom properties help with progressive enhancement */
+  --text-align-start: right;
+  --text-align-end: left;
+  --float-start: right;
+  --float-end: left;
+}
+
+/* Arabic font stack activation */
+:lang(ar),
+[lang="ar"] {
+  font-family: var(--font-family-arabic);
+}
+
+:lang(ar) h1, :lang(ar) h2, :lang(ar) h3,
+:lang(ar) .display, :lang(ar) .heading {
+  font-family: var(--font-family-arabic-display);
+}
+
+/* ==========================================================================
+   REDUCED MOTION - Respect user preference
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: var(--reduce-motion-duration);
+    --duration-fast: var(--reduce-motion-duration);
+    --duration-normal: var(--reduce-motion-duration);
+    --duration-slow: var(--reduce-motion-duration);
+    --duration-slower: var(--reduce-motion-duration);
+    --duration-slowest: var(--reduce-motion-duration);
+    --duration-ambient: var(--reduce-motion-duration);
+    --duration-ambient-slow: var(--reduce-motion-duration);
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: var(--reduce-motion-duration) !important;
+    animation-iteration-count: var(--reduce-motion-iteration) !important;
+    transition-duration: var(--reduce-motion-duration) !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   FONT FEATURE SETTINGS - Enable typographic features
+   ========================================================================== */
+
+:root {
+  --font-feature-kern: "kern" 1;
+  --font-feature-liga: "liga" 1, "clig" 1;
+  --font-feature-calt: "calt" 1;
+  --font-feature-dlig: "dlig" 1;
+  --font-feature-swsh: "swsh" 1;
+  --font-feature-onum: "onum" 1;
+  --font-feature-pnum: "pnum" 1;
+  --font-feature-tnum: "tnum" 1;
+}
+
+.font-feature-elegant {
+  font-feature-settings: var(--font-feature-kern), var(--font-feature-liga), var(--font-feature-calt), var(--font-feature-dlig);
+}
+
+.font-feature-swash {
+  font-feature-settings: var(--font-feature-swsh);
+}
+
+.font-feature-numbers {
+  font-feature-settings: var(--font-feature-onum), var(--font-feature-pnum);
+}
+
+.font-feature-tabular-nums {
+  font-feature-settings: var(--font-feature-tnum);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,17 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" transform="scale(-1, -1) translate(-120, -120)">
+    <!-- Main vine -->
+    <path d="M10 110 Q30 90 50 80 Q70 70 90 50 Q100 30 110 10"/>
+    <!-- Leaves -->
+    <path d="M25 95 Q30 85 25 75"/>
+    <path d="M55 65 Q65 55 55 45"/>
+    <path d="M85 35 Q95 25 85 15"/>
+    <!-- Small flowers -->
+    <circle cx="30" cy="85" r="4"/>
+    <circle cx="60" cy="55" r="3.5"/>
+    <circle cx="90" cy="25" r="3"/>
+    <!-- Buds -->
+    <ellipse cx="20" cy="100" rx="3" ry="5" transform="rotate(-20 20 100)"/>
+    <ellipse cx="100" cy="20" rx="3" ry="5" transform="rotate(20 100 20)"/>
+  </g>
+</svg>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" data-palette="warm">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation Design System - Demo</title>
+  <meta name="description" content="Elegant animated wedding invitation templates with Arabic/RTL support">
+
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/typography.css">
+  <link rel="stylesheet" href="/css/colors.css">
+  <link rel="stylesheet" href="/css/spacing.css">
+  <link rel="stylesheet" href="/css/animations.css">
+
+  <!-- Demo Styles -->
+  <style>
+    :root {
+      --demo-bg: var(--color-surface);
+      --demo-text: var(--color-on-surface);
+    }
+
+    body {
+      background: var(--demo-bg);
+      color: var(--demo-text);
+      font-family: var(--font-family-body);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .demo-header {
+      padding: var(--space-fluid-2xl) var(--space-6);
+      text-align: center;
+      background: var(--gradient-hero);
+      color: var(--color-on-primary);
+    }
+
+    .demo-header .display-xl { margin-bottom: var(--space-4); }
+    .demo-header .body-lg { opacity: 0.9; max-width: 60ch; margin-inline: auto; }
+
+    .demo-section {
+      padding: var(--section-padding) var(--space-6);
+      max-width: var(--container-xl);
+      margin-inline: auto;
+    }
+
+    .demo-section + .demo-section {
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .demo-grid {
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    @media (min-width: 768px) {
+      .demo-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .demo-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .demo-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-6);
+      transition: transform var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-fast) var(--ease-out);
+    }
+
+    .demo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--elevation-card-hover);
+    }
+
+    .demo-card h3 {
+      font-family: var(--font-family-display);
+      font-size: var(--text-heading-md);
+      color: var(--color-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .palette-swatch {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--rounded-md);
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      margin-bottom: var(--space-2);
+      font-size: var(--text-label-md);
+    }
+
+    .palette-swatch__color {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--rounded-sm);
+      border: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-body-sm);
+    }
+
+    .token-table th,
+    .token-table td {
+      padding: var(--space-2) var(--space-3);
+      text-align: start;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .token-table th {
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-secondary);
+      text-transform: uppercase;
+      letter-spacing: var(--letter-spacing-wide);
+      font-size: var(--text-label-sm);
+    }
+
+    .token-table code {
+      font-family: monospace;
+      background: var(--color-surface);
+      padding: 2px 6px;
+      border-radius: var(--rounded-sm);
+    }
+
+    .animation-demo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: center;
+    }
+
+    .animation-demo .btn {
+      animation: var(--animate-breathe);
+    }
+
+    .stagger-demo {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .stagger-demo .stagger-children > div {
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--rounded-md);
+      opacity: 0;
+    }
+
+    .stagger-demo .stagger-children.is-loaded > div {
+      animation: var(--animate-fade-in-up);
+      animation-fill-mode: both;
+    }
+
+    .stagger-demo .stagger-children > div:nth-child(1) { animation-delay: var(--stagger-1); }
+    .stagger-demo .stagger-children > div:nth-child(2) { animation-delay: var(--stagger-2); }
+    .stagger-demo .stagger-children > div:nth-child(3) { animation-delay: var(--stagger-3); }
+    .stagger-demo .stagger-children > div:nth-child(4) { animation-delay: var(--stagger-4); }
+    .stagger-demo .stagger-children > div:nth-child(5) { animation-delay: var(--stagger-5); }
+
+    .reveal-demo .reveal {
+      margin-bottom: var(--space-4);
+    }
+
+    .palette-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      justify-content: center;
+      margin-bottom: var(--space-6);
+    }
+
+    .palette-btn {
+      padding: var(--space-2) var(--space-5);
+      border: 2px solid var(--color-border);
+      background: var(--color-surface-elevated);
+      border-radius: var(--rounded-pill);
+      font-family: var(--font-family-body);
+      font-size: var(--text-label-md);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .palette-btn:hover,
+    .palette-btn[aria-pressed="true"] {
+      border-color: var(--color-tertiary);
+      background: var(--color-tertiary);
+      color: var(--color-on-tertiary);
+    }
+
+    .palette-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 5px var(--color-tertiary);
+    }
+
+    .arabic-demo {
+      direction: rtl;
+      lang: ar;
+      font-family: var(--font-family-arabic);
+    }
+
+    .arabic-demo h2 { font-family: var(--font-family-arabic-display); }
+    .arabic-demo .arabic-couple-names { text-align: center; margin: var(--space-6) 0; }
+
+    .code-block {
+      background: var(--color-neutral-surface);
+      border: 1px solid var(--color-neutral-border);
+      border-radius: var(--rounded-md);
+      padding: var(--space-4);
+      overflow-x: auto;
+      font-size: var(--text-body-sm);
+      line-height: 1.6;
+    }
+
+    .code-block code {
+      font-family: monospace;
+      color: var(--color-neutral-on-surface);
+    }
+
+    .footer-demo {
+      text-align: center;
+      padding: var(--space-fluid-xl) var(--space-6);
+      color: var(--color-secondary);
+      font-size: var(--text-body-sm);
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    /* Floating decorative elements */
+    .floating-ornament {
+      position: fixed;
+      pointer-events: none;
+      opacity: 0.15;
+      z-index: var(--z-index-hide);
+      animation: var(--animate-float-slow);
+    }
+
+    .floating-ornament:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .floating-ornament:nth-child(2) { top: 20%; right: 5%; animation-delay: 2s; }
+    .floating-ornament:nth-child(3) { bottom: 20%; left: 3%; animation-delay: 4s; }
+    .floating-ornament:nth-child(4) { bottom: 10%; right: 3%; animation-delay: 6s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .floating-ornament { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating ambient ornaments -->
+  <svg class="floating-ornament" width="60" height="60" viewBox="0 0 24 24" fill="currentColor" style="color: var(--color-tertiary);">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>
+  <svg class="floating-ornament" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--color-tertiary);">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  </svg>
+  <svg class="floating-ornament" width="50" height="50" viewBox="0 0 24 24" fill="currentColor" style="color: var(--color-tertiary);">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+  </svg>
+
+  <header class="demo-header">
+    <h1 class="display-xl animate-fade-in-up">Wedding Invitation Design System</h1>
+    <p class="body-lg animate-fade-in-up" style="animation-delay: var(--stagger-2);">
+      Elegant animated templates with Arabic/RTL support, fluid typography, and three romantic color palettes
+    </p>
+  </header>
+
+  <main>
+    <!-- Palette Switcher -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="heading-lg mb-6 text-center">Color Palettes</h2>
+        <div class="palette-switcher" role="radiogroup" aria-label="Choose color palette">
+          <button class="palette-btn" role="radio" aria-pressed="true" data-palette="warm" aria-label="Warm palette">Warm Romance</button>
+          <button class="palette-btn" role="radio" aria-pressed="false" data-palette="cool" aria-label="Cool palette">Cool Elegance</button>
+          <button class="palette-btn" role="radio" aria-pressed="false" data-palette="neutral" aria-label="Neutral palette">Neutral Minimal</button>
+        </div>
+
+        <div class="demo-grid" id="palette-swatches">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Demo -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="heading-lg mb-6">Typography Scale</h2>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <h3>Latin Display</h3>
+            <div class="stack-sm">
+              <h1 class="display-xl text-primary">Display XL</h1>
+              <h1 class="display-lg text-primary">Display LG</h1>
+              <h1 class="display-md text-primary">Display MD</h1>
+              <h1 class="display-sm text-primary">Display SM</h1>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Latin Heading</h3>
+            <div class="stack-sm">
+              <h2 class="heading-xl text-primary">Heading XL</h2>
+              <h2 class="heading-lg text-primary">Heading LG</h2>
+              <h2 class="heading-md text-primary">Heading MD</h2>
+              <h2 class="heading-sm text-primary">Heading SM</h2>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Latin Body & Label</h3>
+            <div class="stack-sm">
+              <p class="body-lg text-on-surface">Body LG - Comfortable reading size for longer passages</p>
+              <p class="body-md text-on-surface">Body MD - Default paragraph text</p>
+              <p class="body-sm text-secondary">Body SM - Captions, fine print</p>
+              <span class="label-lg text-tertiary">Label LG - Form labels</span>
+              <span class="label-md text-tertiary">Label MD - Metadata</span>
+              <span class="label-sm text-tertiary">Label SM - Tags, badges</span>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Arabic Display</h3>
+            <div class="arabic-demo stack-sm">
+              <h1 class="arabic-display-xl text-primary">عرض كبير جداً</h1>
+              <h1 class="arabic-display-lg text-primary">عرض كبير</h1>
+              <h1 class="arabic-display-md text-primary">عرض متوسط</h1>
+              <h1 class="arabic-display-sm text-primary">عرض صغير</h1>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Arabic Heading</h3>
+            <div class="arabic-demo stack-sm">
+              <h2 class="arabic-heading-xl text-primary">عنوان كبير جداً</h2>
+              <h2 class="arabic-heading-lg text-primary">عنوان كبير</h2>
+              <h2 class="arabic-heading-md text-primary">عنوان متوسط</h2>
+              <h2 class="arabic-heading-sm text-primary">عنوان صغير</h2>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Arabic Body & Label</h3>
+            <div class="arabic-demo stack-sm">
+              <p class="arabic-body-lg text-on-surface">نص أساسي كبير - مقاس مريح للقراءة المطولة</p>
+              <p class="arabic-body-md text-on-surface">نص أساسي متوسط - النص الافتراضي للفقرات</p>
+              <p class="arabic-body-sm text-secondary">نص أساسي صغير - تعليقات، نصوص دقيقة</p>
+              <span class="arabic-label-lg text-tertiary">تسمية كبيرة - حقول النماذج</span>
+              <span class="arabic-label-md text-tertiary">تسمية متوسطة - بيانات وصفية</span>
+              <span class="arabic-label-sm text-tertiary">تسمية صغيرة - علامات، شارات</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="heading-md mt-10 mb-4">Wedding-Specific Components</h3>
+        <div class="demo-grid">
+          <div class="demo-card">
+            <h3>Couple Names</h3>
+            <div class="couple-names animate-fade-in-up">
+              <span class="name">Emma</span>
+              <span class="ampersand">&</span>
+              <span class="name">James</span>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Arabic Couple Names</h3>
+            <div class="arabic-couple-names animate-fade-in-up">
+              <span class="name">إيما</span>
+              <span class="conjunction">و</span>
+              <span class="name">جيمس</span>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Wedding Date</h3>
+            <time class="wedding-date animate-fade-in-up" datetime="2024-06-15">
+              <span class="day">Saturday</span>
+              <span class="month-year">June 15, 2024</span>
+            </time>
+          </div>
+
+          <div class="demo-card">
+            <h3>Arabic Wedding Date</h3>
+            <div class="arabic-wedding-date animate-fade-in-up">
+              <span class="day">السبت</span>
+              <span class="hijri">15 يونيو 2024</span>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Venue</h3>
+            <address class="venue-name animate-fade-in-up">
+              <span class="venue-line">The Garden Pavilion</span>
+              <span class="venue-line">Sonoma, California</span>
+            </address>
+          </div>
+
+          <div class="demo-card">
+            <h3>Invitation Verse</h3>
+            <blockquote class="invitation-verse animate-fade-in-up">
+              "Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope."
+              <cite>- Maya Angelou</cite>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacing & Layout Demo -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="heading-lg mb-6">Spacing & Layout</h2>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <h3>Container Widths</h3>
+            <div class="stack-sm">
+              <div class="container-sm p-4 bg-surface-elevated border border-border">container-sm (640px)</div>
+              <div class="container-md p-4 bg-surface-elevated border border-border">container-md (768px)</div>
+              <div class="container-lg p-4 bg-surface-elevated border border-border">container-lg (1024px)</div>
+              <div class="container-xl p-4 bg-surface-elevated border border-border">container-xl (1280px)</div>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Stack (Vertical Rhythm)</h3>
+            <div class="stack-lg">
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Item 1</div>
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Item 2</div>
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Item 3</div>
+            </div>
+            <p class="body-sm text-secondary mt-4">Gap: var(--space-6) - .stack-lg</p>
+          </div>
+
+          <div class="demo-card">
+            <h3>Inline (Horizontal Cluster)</h3>
+            <div class="inline-md">
+              <span class="px-3 py-1 bg-tertiary text-on-tertiary rounded-pill">Tag 1</span>
+              <span class="px-3 py-1 bg-tertiary text-on-tertiary rounded-pill">Tag 2</span>
+              <span class="px-3 py-1 bg-tertiary text-on-tertiary rounded-pill">Tag 3</span>
+            </div>
+            <p class="body-sm text-secondary mt-4">Gap: var(--space-4) - .inline-md</p>
+          </div>
+
+          <div class="demo-card">
+            <h3>Responsive Grid</h3>
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Col 1</div>
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Col 2</div>
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Col 3</div>
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Col 4</div>
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Col 5</div>
+              <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Col 6</div>
+            </div>
+            <p class="body-sm text-secondary mt-4">grid gap-4 md:grid-cols-2 lg:grid-cols-3</p>
+          </div>
+
+          <div class="demo-card">
+            <h3>Section Layout</h3>
+            <div class="section p-6 bg-surface-elevated border border-border rounded-lg">
+              <header class="section-header mb-6">
+                <h3 class="heading-md">Section Title</h3>
+                <p class="body-md text-secondary">Section description goes here</p>
+              </header>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Content A</div>
+                <div class="p-4 bg-tertiary text-on-tertiary rounded-md">Content B</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Logical Properties (RTL Ready)</h3>
+            <div class="code-block">
+<code>.card {<br>
+&nbsp;&nbsp;padding-inline: var(--space-6);<br>
+&nbsp;&nbsp;margin-inline-start: var(--space-4);<br>
+&nbsp;&nbsp;border-inline-start: 3px solid var(--color-tertiary);<br>
+&nbsp;&nbsp;text-align: start;<br>
+}</code>
+            </div>
+            <p class="body-sm text-secondary mt-4">Automatically flips in RTL - no CSS changes needed</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Animation Demo -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="heading-lg mb-6">Animation Primitives</h2>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <h3>Entrance Animations</h3>
+            <div class="animation-demo stagger-children is-loaded" id="entrance-demo">
+              <div class="btn btn-primary">Fade In Up</div>
+              <div class="btn btn-secondary">Scale Spring</div>
+              <div class="btn btn-ghost">Slide Reveal</div>
+              <div class="btn btn-primary">Fade In</div>
+              <div class="btn btn-secondary">Fade In Down</div>
+            </div>
+            <button class="btn btn-ghost mt-4" onclick="restartAnimation('entrance-demo')">Replay</button>
+          </div>
+
+          <div class="demo-card">
+            <h3>Hover Interactions</h3>
+            <div class="animation-demo">
+              <button class="btn btn-primary animate-hover-lift">Lift</button>
+              <button class="btn btn-secondary animate-hover-scale">Scale</button>
+              <button class="btn btn-ghost animate-hover-glow">Glow</button>
+              <button class="btn btn-primary">Press Me</button>
+            </div>
+            <p class="body-sm text-secondary mt-4">Hover the buttons • Press the last one</p>
+          </div>
+
+          <div class="demo-card">
+            <h3>Ambient Animations</h3>
+            <div class="animation-demo">
+              <div class="w-12 h-12 bg-tertiary rounded-full animate-float"></div>
+              <div class="w-12 h-12 bg-secondary rounded-lg animate-float-slow"></div>
+              <div class="w-12 h-12 bg-gradient-hero rounded-xl animate-breathe"></div>
+              <div class="w-12 h-12 bg-gradient-tertiary rounded-full animate-pulse-glow"></div>
+              <div class="w-12 h-12 bg-gradient-hero rounded-ornament animate-rotate-slow"></div>
+            </div>
+            <p class="body-sm text-secondary mt-4">Float • Float Slow • Breathe • Pulse Glow • Rotate</p>
+          </div>
+
+          <div class="demo-card">
+            <h3>Scroll Reveal</h3>
+            <div class="reveal-demo stack-sm" id="reveal-demo">
+              <div class="reveal reveal-up p-4 bg-tertiary text-on-tertiary rounded-md">Reveal Up</div>
+              <div class="reveal reveal-down p-4 bg-secondary text-on-secondary rounded-md">Reveal Down</div>
+              <div class="reveal reveal-left p-4 bg-tertiary text-on-tertiary rounded-md">Reveal Left</div>
+              <div class="reveal reveal-right p-4 bg-secondary text-on-secondary rounded-md">Reveal Right</div>
+              <div class="reveal reveal-scale p-4 bg-tertiary text-on-tertiary rounded-md">Reveal Scale</div>
+              <div class="reveal reveal-blur p-4 bg-secondary text-on-secondary rounded-md">Reveal Blur</div>
+            </div>
+            <p class="body-sm text-secondary mt-4">Scroll down to trigger - uses IntersectionObserver</p>
+          </div>
+
+          <div class="demo-card">
+            <h3>Stagger Children</h3>
+            <div class="stagger-demo">
+              <div class="stagger-children is-loaded" id="stagger-demo">
+                <div>First item</div>
+                <div>Second item</div>
+                <div>Third item</div>
+                <div>Fourth item</div>
+                <div>Fifth item</div>
+              </div>
+            </div>
+            <button class="btn btn-ghost mt-4" onclick="restartAnimation('stagger-demo')">Replay Stagger</button>
+          </div>
+        </div>
+
+        <h3 class="heading-md mt-10 mb-4">Composite Animation Tokens</h3>
+        <div class="code-block">
+<code>/* Entrance */
+--animate-fade-in: fade-in var(--duration-normal) var(--ease-out) forwards;
+--animate-fade-in-up: fade-in-up var(--duration-slow) var(--ease-gentle) forwards;
+--animate-scale-in-spring: scale-in-spring var(--duration-slow) var(--ease-spring) forwards;
+--animate-slide-up-reveal: slide-up-reveal var(--duration-slower) var(--ease-elegant) forwards;
+
+/* Scroll Reveal */
+--animate-reveal-up: reveal-up var(--duration-slower) var(--ease-gentle) forwards;
+
+/* Hover */
+--animate-hover-lift: hover-lift var(--duration-fast) var(--ease-out) forwards;
+--animate-hover-glow: hover-glow var(--duration-normal) var(--ease-out) forwards;
+
+/* Ambient */
+--animate-float: float var(--duration-ambient) var(--ease-in-out) infinite;
+--animate-gradient-shift: gradient-shift var(--duration-ambient-slow) var(--ease-in-out) infinite;
+--animate-breathe: breathe var(--duration-ambient) var(--ease-in-out) infinite;
+
+/* Stagger Delays */
+--stagger-1: calc(var(--stagger-base) * 1);  /* 50ms */
+--stagger-2: calc(var(--stagger-base) * 2);  /* 100ms */
+--stagger-3: calc(var(--stagger-base) * 3);  /* 150ms */</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- Token Reference Tables -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="heading-lg mb-6">Design Token Reference</h2>
+
+        <details class="mb-6">
+          <summary class="heading-md cursor-pointer">Color Tokens</summary>
+          <table class="token-table mt-4">
+            <thead><tr><th>Token</th><th>Warm Value</th><th>Cool Value</th><th>Neutral Value</th><th>Usage</th></tr></thead>
+            <tbody>
+              <tr><td><code>--color-primary</code></td><td>#4A2C2A</td><td>#1B3A4B</td><td>#1A1A2E</td><td>Headlines, key text</td></tr>
+              <tr><td><code>--color-secondary</code></td><td>#8B6914</td><td>#2A6B7B</td><td>#3D3D5C</td><td>Supporting text</td></tr>
+              <tr><td><code>--color-tertiary</code></td><td>#C9A962</td><td>#4EC0CA</td><td>#8B8B8B</td><td>CTAs, accents</td></tr>
+              <tr><td><code>--color-surface</code></td><td>#FDF8F3</td><td>#F0F7F8</td><td>#FAFAFA</td><td>Page background</td></tr>
+              <tr><td><code>--color-on-surface</code></td><td>#2D1B1A</td><td>#0D1F26</td><td>#1A1A2E</td><td>Body text</td></tr>
+              <tr><td><code>--color-border</code></td><td>#E8D5C4</td><td>#CDE8EC</td><td>#E8E8E8</td><td>Dividers, inputs</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details class="mb-6">
+          <summary class="heading-md cursor-pointer">Spacing Tokens</summary>
+          <table class="token-table mt-4">
+            <thead><tr><th>Token</th><th>Value</th><th>Fluid Variant</th><th>Usage</th></tr></thead>
+            <tbody>
+              <tr><td><code>--space-1</code></td><td>4px</td><td>-</td><td>Tight gaps</td></tr>
+              <tr><td><code>--space-4</code></td><td>16px</td><td>-</td><td>Standard gap</td></tr>
+              <tr><td><code>--space-6</code></td><td>24px</td><td>-</td><td>Card padding</td></tr>
+              <tr><td><code>--space-fluid-md</code></td><td>-</td><td>clamp(16px, 2vw, 32px)</td><td>Responsive gaps</td></tr>
+              <tr><td><code>--space-fluid-lg</code></td><td>-</td><td>clamp(24px, 3vw, 48px)</td><td>Section padding</td></tr>
+              <tr><td><code>--space-fluid-xl</code></td><td>-</td><td>clamp(32px, 4vw, 64px)</td><td>Section gaps</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details class="mb-6">
+          <summary class="heading-md cursor-pointer">Motion Tokens</summary>
+          <table class="token-table mt-4">
+            <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+            <tbody>
+              <tr><td><code>--duration-fast</code></td><td>150ms</td><td>Hover, press</td></tr>
+              <tr><td><code>--duration-normal</code></td><td>250ms</td><td>Transitions</td></tr>
+              <tr><td><code>--duration-slow</code></td><td>350ms</td><td>Entrance</td></tr>
+              <tr><td><code>--duration-slower</code></td><td>500ms</td><td>Reveal</td></tr>
+              <tr><td><code>--duration-ambient</code></td><td>3000ms</td><td>Background loops</td></tr>
+              <tr><td><code>--ease-gentle</code></td><td>cubic-bezier(0.25,0.46,0.45,0.94)</td><td>Elegant reveals</td></tr>
+              <tr><td><code>--ease-elegant</code></td><td>cubic-bezier(0.16,1,0.3,1)</td><td>Premium feel</td></tr>
+              <tr><td><code>--ease-spring</code></td><td>cubic-bezier(0.34,1.56,0.64,1)</td><td>Playful overshoot</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details class="mb-6">
+          <summary class="heading-md cursor-pointer">Typography Tokens (Fluid)</summary>
+          <table class="token-table mt-4">
+            <thead><tr><th>Token</th><th>Clamp Range</th><th>Usage</th></tr></thead>
+            <tbody>
+              <tr><td><code>--text-display-xl</code></td><td>clamp(2.5rem, 5vw + 1rem, 5rem)</td><td>Hero names</td></tr>
+              <tr><td><code>--text-display-lg</code></td><td>clamp(2rem, 4vw + 0.5rem, 3.5rem)</td><td>Large display</td></tr>
+              <tr><td><code>--text-heading-xl</code></td><td>clamp(1.75rem, 3vw + 0.5rem, 2.5rem)</td><td>Section titles</td></tr>
+              <tr><td><code>--text-body-md</code></td><td>clamp(1rem, 0.875vw + 0.75rem, 1.125rem)</td><td>Paragraphs</td></tr>
+              <tr><td><code>--text-arabic-display-xl</code></td><td>clamp(2.5rem, 5vw + 1rem, 5rem)</td><td>Arabic hero</td></tr>
+              <tr><td><code>--text-arabic-body-md</code></td><td>clamp(1rem, 0.875vw + 0.75rem, 1.125rem)</td><td>Arabic body</td></tr>
+            </tbody>
+          </table>
+        </details>
+      </div>
+    </section>
+
+    <!-- Arabic/RTL Demo -->
+    <section class="demo-section arabic-demo">
+      <div class="container">
+        <h2 class="heading-lg mb-6 text-center">Arabic / RTL Support</h2>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <h3>RTL Layout</h3>
+            <p class="body-md mb-4">All layout uses logical properties. This card's content flows right-to-left automatically when <code>dir="rtl"</code> is set on the HTML element.</p>
+            <div class="inline-md gap-2">
+              <button class="btn btn-primary">زر رئيسي</button>
+              <button class="btn btn-secondary">زر ثانوي</button>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Arabic Typography</h3>
+            <div class="stack-sm">
+              <h3 class="arabic-heading-lg text-primary">عنوان بالعربية</h3>
+              <p class="arabic-body-md text-on-surface">هذا نص باللغة العربية يستخدم خط Noto Sans Arabic للنصوص و Amiri للعناوين. المسافات بين الأسطر محسّنة للخط العربي مع ضبط line-height = 1.75</p>
+              <blockquote class="arabic-invitation-verse">
+                "وَجَعَلْنَا بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+                <cite>- سورة الروم: 21</cite>
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <h3>Arabic Wedding Components</h3>
+            <div class="arabic-couple-names animate-fade-in-up">
+              <span class="name">إيما</span>
+              <span class="conjunction">و</span>
+              <span class="name">جيمس</span>
+            </div>
+            <div class="arabic-wedding-date animate-fade-in-up" style="animation-delay: var(--stagger-3);">
+              <span class="day">السبت، 15 يونيو 2024</span>
+              <span class="hijri">الموافق 7 ذو الحجة 1445 هـ</span>
+            </div>
+            <address class="venue-name animate-fade-in-up" style="animation-delay: var(--stagger-5);">
+              <span class="venue-line">قصر الحدائق، جدة</span>
+            </address>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-demo">
+    <p class="body-md mb-2">Wedding Invitation Design System - <strong>alpha</strong></p>
+    <p class="body-sm">Built with vanilla HTML/CSS/JS • Self-hosted fonts • WCAG AA • RTL ready • Reduced motion respectful</p>
+    <p class="body-sm mt-2">
+      <a href="/css/design-tokens.css" class="text-tertiary hover:underline">Tokens</a> ·
+      <a href="/css/typography.css" class="text-tertiary hover:underline">Typography</a> ·
+      <a href="/css/colors.css" class="text-tertiary hover:underline">Colors</a> ·
+      <a href="/css/spacing.css" class="text-tertiary hover:underline">Spacing</a> ·
+      <a href="/css/animations.css" class="text-tertiary hover:underline">Animations</a> ·
+      <a href="/DESIGN_TOKENS.md" class="text-tertiary hover:underline">Docs</a>
+    </p>
+  </footer>
+
+  <script>
+    // Palette switcher
+    const paletteButtons = document.querySelectorAll('.palette-btn');
+    const html = document.documentElement;
+
+    paletteButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const palette = btn.dataset.palette;
+        html.dataset.palette = palette;
+        localStorage.setItem('wedding-palette', palette);
+
+        paletteButtons.forEach(b => {
+          b.setAttribute('aria-pressed', b === btn);
+        });
+      });
+    });
+
+    // Restore saved palette
+    const savedPalette = localStorage.getItem('wedding-palette');
+    if (savedPalette) {
+      html.dataset.palette = savedPalette;
+      paletteButtons.forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.dataset.palette === savedPalette);
+      });
+    }
+
+    // Restart animation helper
+    function restartAnimation(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      el.classList.remove('is-loaded');
+      // Force reflow
+      void el.offsetWidth;
+      el.classList.add('is-loaded');
+    }
+
+    // Scroll reveal IntersectionObserver
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -10% 0px',
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Stagger demo restart
+    const staggerDemo = document.getElementById('stagger-demo');
+    if (staggerDemo) {
+      // Initial load
+      staggerDemo.classList.add('is-loaded');
+    }
+
+    // Reduced motion indicator
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReduced.matches) {
+      console.log('Reduced motion enabled - animations disabled');
+    }
+    prefersReduced.addEventListener('change', (e) => {
+      console.log('Reduced motion:', e.matches ? 'enabled' : 'disabled');
+    });
+
+    // Print current tokens for debugging
+    console.log('Design System Loaded');
+    console.log('Active palette:', html.dataset.palette);
+    console.log('Tokens:', {
+      primary: getComputedStyle(html).getPropertyValue('--color-primary').trim(),
+      tertiary: getComputedStyle(html).getPropertyValue('--color-tertiary').trim(),
+      surface: getComputedStyle(html).getPropertyValue('--color-surface').trim(),
+      durationNormal: getComputedStyle(html).getPropertyValue('--duration-normal').trim(),
+      easeGentle: getComputedStyle(html).getPropertyValue('--ease-gentle').trim(),
+    });
+  </script>
+</body>
+</html>

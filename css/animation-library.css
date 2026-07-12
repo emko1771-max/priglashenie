@@ -1,0 +1,937 @@
+/**
+ * Wedding Invitation Animation Library
+ * Comprehensive CSS animation utilities for wedding invitation templates
+ * Import after design-tokens.css and animations.css
+ */
+
+/* ==========================================================================
+   DURATION TOKENS (aligned with design-tokens.css + additions)
+   ========================================================================== */
+:root {
+  /* Base durations from design-tokens.css */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;       /* --duration-fast in design-tokens */
+  --duration-base: 300ms;       /* NEW: base duration */
+  --duration-normal: 250ms;     /* existing --duration-normal */
+  --duration-slow: 500ms;       /* NEW: --duration-slow (was 350ms in tokens) */
+  --duration-slower: 800ms;     /* NEW: --duration-slower (was 500ms in tokens) */
+  --duration-slowest: 1000ms;   /* NEW: extended slow */
+  --duration-ambient: 3000ms;   /* existing */
+  --duration-ambient-slow: 6000ms; /* existing */
+
+  /* Alias for design-tokens compatibility */
+  --duration-fast-alias: var(--duration-fast);
+  --duration-normal-alias: var(--duration-normal);
+  --duration-slow-alias: var(--duration-slow);
+  --duration-slower-alias: var(--duration-slower);
+}
+
+/* ==========================================================================
+   EASING TOKENS (aligned with design-tokens.css + additions)
+   ========================================================================== */
+:root {
+  /* Existing easing from design-tokens.css */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-elegant: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce-subtle: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* NEW: Standard easing aliases */
+  --easing-ease: var(--ease-in-out);
+  --easing-ease-out: var(--ease-out);
+  --easing-ease-in: var(--ease-in);
+  --easing-ease-in-out: var(--ease-in-out);
+  --easing-spring: var(--ease-spring);
+  --easing-bounce: var(--ease-bounce-subtle);
+  --easing-gentle: var(--ease-gentle);
+  --easing-elegant: var(--ease-elegant);
+}
+
+/* ==========================================================================
+   STAGGER DELAY TOKENS (100ms increments --delay-1 through --delay-12)
+   ========================================================================== */
+:root {
+  --delay-base: 100ms;
+  --delay-1: calc(var(--delay-base) * 1);   /* 100ms */
+  --delay-2: calc(var(--delay-base) * 2);   /* 200ms */
+  --delay-3: calc(var(--delay-base) * 3);   /* 300ms */
+  --delay-4: calc(var(--delay-base) * 4);   /* 400ms */
+  --delay-5: calc(var(--delay-base) * 5);   /* 500ms */
+  --delay-6: calc(var(--delay-base) * 6);   /* 600ms */
+  --delay-7: calc(var(--delay-base) * 7);   /* 700ms */
+  --delay-8: calc(var(--delay-base) * 8);   /* 800ms */
+  --delay-9: calc(var(--delay-base) * 9);   /* 900ms */
+  --delay-10: calc(var(--delay-base) * 10); /* 1000ms */
+  --delay-11: calc(var(--delay-base) * 11); /* 1100ms */
+  --delay-12: calc(var(--delay-base) * 12); /* 1200ms */
+
+  /* Stagger base from design-tokens (50ms) for tighter staggers */
+  --stagger-base: 50ms;
+  --stagger-1: calc(var(--stagger-base) * 1);
+  --stagger-2: calc(var(--stagger-base) * 2);
+  --stagger-3: calc(var(--stagger-base) * 3);
+  --stagger-4: calc(var(--stagger-base) * 4);
+  --stagger-5: calc(var(--stagger-base) * 5);
+  --stagger-6: calc(var(--stagger-base) * 6);
+  --stagger-7: calc(var(--stagger-base) * 7);
+  --stagger-8: calc(var(--stagger-base) * 8);
+}
+
+/* ==========================================================================
+   KEYFRAMES - ENTRANCE ANIMATIONS
+   ========================================================================== */
+
+/* Fade */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Scale */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scale-in-spring {
+  0% { opacity: 0; transform: scale(0.8); }
+  60% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Slide Reveal (clip-path for clean reveals) */
+@keyframes slide-up-reveal {
+  from { opacity: 0; transform: translateY(100%); clip-path: inset(100% 0 0 0); }
+  to { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes slide-down-reveal {
+  from { opacity: 0; transform: translateY(-100%); clip-path: inset(0 0 100% 0); }
+  to { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes slide-left-reveal {
+  from { opacity: 0; transform: translateX(100%); clip-path: inset(0 100% 0 0); }
+  to { opacity: 1; transform: translateX(0); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes slide-right-reveal {
+  from { opacity: 0; transform: translateX(-100%); clip-path: inset(0 0 0 100%); }
+  to { opacity: 1; transform: translateX(0); clip-path: inset(0 0 0 0); }
+}
+
+/* Rotate In */
+@keyframes rotate-in {
+  from { opacity: 0; transform: rotate(-10deg) scale(0.9); }
+  to { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+@keyframes flip-in {
+  from { opacity: 0; transform: rotateY(-90deg) scale(0.9); }
+  to { opacity: 1; transform: rotateY(0) scale(1); }
+}
+
+/* ==========================================================================
+   KEYFRAMES - EXIT ANIMATIONS (matching entrance)
+   ========================================================================== */
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-out-up {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+@keyframes fade-out-down {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes fade-out-left {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-20px); }
+}
+
+@keyframes fade-out-right {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(20px); }
+}
+
+@keyframes scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+
+@keyframes scale-out-spring {
+  0% { opacity: 1; transform: scale(1); }
+  40% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+@keyframes slide-up-exit {
+  from { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+  to { opacity: 0; transform: translateY(-100%); clip-path: inset(100% 0 0 0); }
+}
+
+@keyframes slide-down-exit {
+  from { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+  to { opacity: 0; transform: translateY(100%); clip-path: inset(0 0 100% 0); }
+}
+
+@keyframes slide-left-exit {
+  from { opacity: 1; transform: translateX(0); clip-path: inset(0 0 0 0); }
+  to { opacity: 0; transform: translateX(-100%); clip-path: inset(0 100% 0 0); }
+}
+
+@keyframes slide-right-exit {
+  from { opacity: 1; transform: translateX(0); clip-path: inset(0 0 0 0); }
+  to { opacity: 0; transform: translateX(100%); clip-path: inset(0 0 0 100%); }
+}
+
+@keyframes rotate-out {
+  from { opacity: 1; transform: rotate(0) scale(1); }
+  to { opacity: 0; transform: rotate(10deg) scale(0.9); }
+}
+
+@keyframes flip-out {
+  from { opacity: 1; transform: rotateY(0) scale(1); }
+  to { opacity: 0; transform: rotateY(90deg) scale(0.9); }
+}
+
+/* ==========================================================================
+   KEYFRAMES - SCROLL REVEAL ANIMATIONS
+   ========================================================================== */
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-down {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes reveal-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes reveal-scale {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes reveal-rotate {
+  from { opacity: 0; transform: rotate(-5deg) scale(0.95); }
+  to { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+@keyframes reveal-blur {
+  from { opacity: 0; filter: blur(20px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+@keyframes reveal-clip-up {
+  from { opacity: 0; clip-path: inset(100% 0 0 0); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes reveal-clip-down {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+/* ==========================================================================
+   KEYFRAMES - HOVER / INTERACTION PRIMITIVES
+   ========================================================================== */
+
+@keyframes hover-lift {
+  from { transform: translateY(0); box-shadow: var(--elevation-card, 0 2px 8px 0 rgb(0 0 0 / 0.06)); }
+  to { transform: translateY(-4px); box-shadow: var(--elevation-card-hover, 0 8px 24px 0 rgb(0 0 0 / 0.1)); }
+}
+
+@keyframes hover-scale {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+@keyframes hover-glow {
+  from { box-shadow: 0 0 0 0 rgb(var(--color-tertiary-rgb, 201 169 98) / 0); }
+  to { box-shadow: 0 0 20px 4px rgb(var(--color-tertiary-rgb, 201 169 98) / 0.3); }
+}
+
+@keyframes press-scale {
+  from { transform: scale(1); }
+  to { transform: scale(0.98); }
+}
+
+@keyframes focus-ring {
+  0% { box-shadow: 0 0 0 0 rgb(var(--color-tertiary-rgb, 201 169 98) / 0.4); }
+  100% { box-shadow: 0 0 0 4px rgb(var(--color-tertiary-rgb, 201 169 98) / 0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* ==========================================================================
+   KEYFRAMES - AMBIENT / BACKGROUND PRIMITIVES
+   ========================================================================== */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(-5px) translateX(-5px); }
+  75% { transform: translateY(-15px) translateX(3px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+  33% { transform: translateY(-20px) translateX(10px) rotate(2deg); }
+  66% { transform: translateY(-10px) translateX(-10px) rotate(-2deg); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px 0 rgb(var(--color-tertiary-rgb, 201 169 98) / 0.2); }
+  50% { box-shadow: 0 0 40px 10px rgb(var(--color-tertiary-rgb, 201 169 98) / 0.4); }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes wave {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float-particle {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(var(--drift, 0)) scale(0); opacity: 0; }
+}
+
+@keyframes confetti-burst {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0); opacity: 0; }
+}
+
+/* ==========================================================================
+   COMPOSITE ANIMATION TOKENS - Ready-to-use animation shorthands
+   ========================================================================== */
+
+:root {
+  /* Entrance Animations */
+  --animate-fade-in: fade-in var(--duration-fast) var(--easing-ease-out) forwards;
+  --animate-fade-in-up: fade-in-up var(--duration-base) var(--easing-gentle) forwards;
+  --animate-fade-in-down: fade-in-down var(--duration-base) var(--easing-gentle) forwards;
+  --animate-fade-in-left: fade-in-left var(--duration-base) var(--easing-gentle) forwards;
+  --animate-fade-in-right: fade-in-right var(--duration-base) var(--easing-gentle) forwards;
+  --animate-scale-in: scale-in var(--duration-fast) var(--easing-spring) forwards;
+  --animate-scale-in-spring: scale-in-spring var(--duration-slow) var(--easing-spring) forwards;
+  --animate-slide-up-reveal: slide-up-reveal var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-slide-down-reveal: slide-down-reveal var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-slide-left-reveal: slide-left-reveal var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-slide-right-reveal: slide-right-reveal var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-rotate-in: rotate-in var(--duration-base) var(--easing-spring) forwards;
+  --animate-flip-in: flip-in var(--duration-slow) var(--easing-elegant) forwards;
+
+  /* Exit Animations */
+  --animate-fade-out: fade-out var(--duration-fast) var(--easing-ease-in) forwards;
+  --animate-fade-out-up: fade-out-up var(--duration-base) var(--easing-gentle) forwards;
+  --animate-fade-out-down: fade-out-down var(--duration-base) var(--easing-gentle) forwards;
+  --animate-fade-out-left: fade-out-left var(--duration-base) var(--easing-gentle) forwards;
+  --animate-fade-out-right: fade-out-right var(--duration-base) var(--easing-gentle) forwards;
+  --animate-scale-out: scale-out var(--duration-fast) var(--easing-ease-in) forwards;
+  --animate-scale-out-spring: scale-out-spring var(--duration-slow) var(--easing-spring) forwards;
+  --animate-slide-up-exit: slide-up-exit var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-slide-down-exit: slide-down-exit var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-slide-left-exit: slide-left-exit var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-slide-right-exit: slide-right-exit var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-rotate-out: rotate-out var(--duration-base) var(--easing-ease-in) forwards;
+  --animate-flip-out: flip-out var(--duration-slow) var(--easing-elegant) forwards;
+
+  /* Scroll Reveal Animations */
+  --animate-reveal-up: reveal-up var(--duration-slower) var(--easing-gentle) forwards;
+  --animate-reveal-down: reveal-down var(--duration-slower) var(--easing-gentle) forwards;
+  --animate-reveal-left: reveal-left var(--duration-slower) var(--easing-gentle) forwards;
+  --animate-reveal-right: reveal-right var(--duration-slower) var(--easing-gentle) forwards;
+  --animate-reveal-scale: reveal-scale var(--duration-slower) var(--easing-gentle) forwards;
+  --animate-reveal-rotate: reveal-rotate var(--duration-slower) var(--easing-gentle) forwards;
+  --animate-reveal-blur: reveal-blur var(--duration-slower) var(--easing-gentle) forwards;
+  --animate-reveal-clip-up: reveal-clip-up var(--duration-slower) var(--easing-elegant) forwards;
+  --animate-reveal-clip-down: reveal-clip-down var(--duration-slower) var(--easing-elegant) forwards;
+
+  /* Hover / Interaction Animations */
+  --animate-hover-lift: hover-lift var(--duration-fast) var(--easing-ease-out) forwards;
+  --animate-hover-scale: hover-scale var(--duration-fast) var(--easing-ease-out) forwards;
+  --animate-hover-glow: hover-glow var(--duration-normal) var(--easing-ease-out) forwards;
+  --animate-press: press-scale var(--duration-instant) var(--easing-ease-in) forwards;
+  --animate-focus-ring: focus-ring var(--duration-normal) var(--easing-ease-out) forwards;
+  --animate-shimmer: shimmer var(--duration-slow) var(--ease-linear) infinite;
+  --animate-ripple: ripple var(--duration-normal) var(--ease-out) forwards;
+
+  /* Ambient Animations */
+  --animate-float: float var(--duration-ambient) var(--easing-ease-in-out) infinite;
+  --animate-float-slow: float-slow var(--duration-ambient-slow) var(--easing-ease-in-out) infinite;
+  --animate-pulse-soft: pulse-soft var(--duration-ambient) var(--easing-ease-in-out) infinite;
+  --animate-pulse-glow: pulse-glow var(--duration-ambient) var(--easing-ease-in-out) infinite;
+  --animate-rotate-slow: rotate-slow var(--duration-ambient-slow) var(--ease-linear) infinite;
+  --animate-gradient-shift: gradient-shift var(--duration-ambient-slow) var(--easing-ease-in-out) infinite;
+  --animate-sparkle: sparkle var(--duration-slower) var(--easing-ease-in-out) infinite;
+  --animate-breathe: breathe var(--duration-ambient) var(--easing-ease-in-out) infinite;
+  --animate-wave: wave var(--duration-ambient) var(--ease-linear) infinite;
+  --animate-float-particle: float-particle var(--duration-ambient) var(--easing-ease-in-out) infinite;
+  --animate-confetti-burst: confetti-burst var(--duration-slower) var(--easing-ease-out) forwards;
+}
+
+/* ==========================================================================
+   ANIMATION UTILITY CLASSES
+   ========================================================================== */
+
+/* Entrance Animations */
+.animate-fade-in { animation: var(--animate-fade-in); }
+.animate-fade-in-up { animation: var(--animate-fade-in-up); }
+.animate-fade-in-down { animation: var(--animate-fade-in-down); }
+.animate-fade-in-left { animation: var(--animate-fade-in-left); }
+.animate-fade-in-right { animation: var(--animate-fade-in-right); }
+.animate-scale-in { animation: var(--animate-scale-in); }
+.animate-scale-in-spring { animation: var(--animate-scale-in-spring); }
+.animate-slide-up-reveal { animation: var(--animate-slide-up-reveal); }
+.animate-slide-down-reveal { animation: var(--animate-slide-down-reveal); }
+.animate-slide-left-reveal { animation: var(--animate-slide-left-reveal); }
+.animate-slide-right-reveal { animation: var(--animate-slide-right-reveal); }
+.animate-rotate-in { animation: var(--animate-rotate-in); }
+.animate-flip-in { animation: var(--animate-flip-in); }
+
+/* Exit Animations */
+.animate-fade-out { animation: var(--animate-fade-out); }
+.animate-fade-out-up { animation: var(--animate-fade-out-up); }
+.animate-fade-out-down { animation: var(--animate-fade-out-down); }
+.animate-fade-out-left { animation: var(--animate-fade-out-left); }
+.animate-fade-out-right { animation: var(--animate-fade-out-right); }
+.animate-scale-out { animation: var(--animate-scale-out); }
+.animate-scale-out-spring { animation: var(--animate-scale-out-spring); }
+.animate-slide-up-exit { animation: var(--animate-slide-up-exit); }
+.animate-slide-down-exit { animation: var(--animate-slide-down-exit); }
+.animate-slide-left-exit { animation: var(--animate-slide-left-exit); }
+.animate-slide-right-exit { animation: var(--animate-slide-right-exit); }
+.animate-rotate-out { animation: var(--animate-rotate-out); }
+.animate-flip-out { animation: var(--animate-flip-out); }
+
+/* Scroll Reveal (use with IntersectionObserver) */
+.animate-reveal-up { animation: var(--animate-reveal-up); opacity: 0; }
+.animate-reveal-down { animation: var(--animate-reveal-down); opacity: 0; }
+.animate-reveal-left { animation: var(--animate-reveal-left); opacity: 0; }
+.animate-reveal-right { animation: var(--animate-reveal-right); opacity: 0; }
+.animate-reveal-scale { animation: var(--animate-reveal-scale); opacity: 0; }
+.animate-reveal-rotate { animation: var(--animate-reveal-rotate); opacity: 0; }
+.animate-reveal-blur { animation: var(--animate-reveal-blur); opacity: 0; }
+.animate-reveal-clip-up { animation: var(--animate-reveal-clip-up); opacity: 0; }
+.animate-reveal-clip-down { animation: var(--animate-reveal-clip-down); opacity: 0; }
+
+/* Hover Animations */
+.animate-hover-lift:hover { animation: var(--animate-hover-lift); }
+.animate-hover-scale:hover { animation: var(--animate-hover-scale); }
+.animate-hover-glow:hover { animation: var(--animate-hover-glow); }
+.animate-press:active { animation: var(--animate-press); }
+.animate-focus-ring:focus-visible { animation: var(--animate-focus-ring); }
+.animate-shimmer { animation: var(--animate-shimmer); background-size: 200% 100%; }
+.animate-ripple { animation: var(--animate-ripple); }
+
+/* Ambient Animations */
+.animate-float { animation: var(--animate-float); }
+.animate-float-slow { animation: var(--animate-float-slow); }
+.animate-pulse-soft { animation: var(--animate-pulse-soft); }
+.animate-pulse-glow { animation: var(--animate-pulse-glow); }
+.animate-rotate-slow { animation: var(--animate-rotate-slow); }
+.animate-gradient-shift { animation: var(--animate-gradient-shift); background-size: 200% 200%; }
+.animate-sparkle { animation: var(--animate-sparkle); }
+.animate-breathe { animation: var(--animate-breathe); }
+.animate-wave { animation: var(--animate-wave); }
+
+/* ==========================================================================
+   STAGGER DELAY UTILITY CLASSES
+   ========================================================================== */
+
+/* Stagger using 100ms increments (--delay-1 through --delay-12) */
+.delay-1 { animation-delay: var(--delay-1); }
+.delay-2 { animation-delay: var(--delay-2); }
+.delay-3 { animation-delay: var(--delay-3); }
+.delay-4 { animation-delay: var(--delay-4); }
+.delay-5 { animation-delay: var(--delay-5); }
+.delay-6 { animation-delay: var(--delay-6); }
+.delay-7 { animation-delay: var(--delay-7); }
+.delay-8 { animation-delay: var(--delay-8); }
+.delay-9 { animation-delay: var(--delay-9); }
+.delay-10 { animation-delay: var(--delay-10); }
+.delay-11 { animation-delay: var(--delay-11); }
+.delay-12 { animation-delay: var(--delay-12); }
+
+/* Stagger using 50ms increments (--stagger-1 through --stagger-8) */
+.stagger-1 { animation-delay: var(--stagger-1); }
+.stagger-2 { animation-delay: var(--stagger-2); }
+.stagger-3 { animation-delay: var(--stagger-3); }
+.stagger-4 { animation-delay: var(--stagger-4); }
+.stagger-5 { animation-delay: var(--stagger-5); }
+.stagger-6 { animation-delay: var(--stagger-6); }
+.stagger-7 { animation-delay: var(--stagger-7); }
+.stagger-8 { animation-delay: var(--stagger-8); }
+
+/* Stagger Children */
+.stagger-children > * {
+  animation-fill-mode: both;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: var(--stagger-1); }
+.stagger-children > *:nth-child(2) { animation-delay: var(--stagger-2); }
+.stagger-children > *:nth-child(3) { animation-delay: var(--stagger-3); }
+.stagger-children > *:nth-child(4) { animation-delay: var(--stagger-4); }
+.stagger-children > *:nth-child(5) { animation-delay: var(--stagger-5); }
+.stagger-children > *:nth-child(6) { animation-delay: var(--stagger-6); }
+.stagger-children > *:nth-child(7) { animation-delay: var(--stagger-7); }
+.stagger-children > *:nth-child(8) { animation-delay: var(--stagger-8); }
+
+/* Stagger with custom base delays */
+.stagger-sm > *:nth-child(n) { animation-delay: calc(var(--stagger-sm, 75ms) * (n - 1)); }
+.stagger-md > *:nth-child(n) { animation-delay: calc(var(--stagger-md, 100ms) * (n - 1)); }
+.stagger-lg > *:nth-child(n) { animation-delay: calc(var(--stagger-lg, 150ms) * (n - 1)); }
+.stagger-xl > *:nth-child(n) { animation-delay: calc(var(--stagger-xl, 200ms) * (n - 1)); }
+
+/* ==========================================================================
+   SCROLL-REVEAL UTILITY (use with JS IntersectionObserver)
+   ========================================================================== */
+
+.reveal {
+  opacity: 0;
+  transition: opacity var(--duration-slower) var(--easing-gentle),
+              transform var(--duration-slower) var(--easing-gentle),
+              filter var(--duration-slower) var(--easing-gentle),
+              clip-path var(--duration-slower) var(--easing-elegant);
+  will-change: opacity, transform, filter, clip-path;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Reveal variants */
+.reveal-up { transform: translateY(40px); }
+.reveal-up.is-visible { transform: translateY(0); }
+
+.reveal-down { transform: translateY(-40px); }
+.reveal-down.is-visible { transform: translateY(0); }
+
+.reveal-left { transform: translateX(-40px); }
+.reveal-left.is-visible { transform: translateX(0); }
+
+.reveal-right { transform: translateX(40px); }
+.reveal-right.is-visible { transform: translateX(0); }
+
+.reveal-scale { transform: scale(0.9); }
+.reveal-scale.is-visible { transform: scale(1); }
+
+.reveal-rotate { transform: rotate(-5deg) scale(0.95); }
+.reveal-rotate.is-visible { transform: rotate(0) scale(1); }
+
+.reveal-blur { filter: blur(20px); }
+.reveal-blur.is-visible { filter: blur(0); }
+
+.reveal-clip-up { clip-path: inset(100% 0 0 0); }
+.reveal-clip-up.is-visible { clip-path: inset(0 0 0 0); }
+
+.reveal-clip-down { clip-path: inset(0 0 100% 0); }
+.reveal-clip-down.is-visible { clip-path: inset(0 0 0 0); }
+
+/* ==========================================================================
+   TRANSITION UTILITIES
+   ========================================================================== */
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: var(--easing-ease-out);
+  transition-duration: var(--duration-normal);
+}
+
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: var(--easing-ease-out);
+  transition-duration: var(--duration-fast);
+}
+
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: var(--easing-ease-out);
+  transition-duration: var(--duration-normal);
+}
+
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: var(--easing-ease-out);
+  transition-duration: var(--duration-normal);
+}
+
+.transition-shadow {
+  transition-property: box-shadow;
+  transition-timing-function: var(--easing-ease-out);
+  transition-duration: var(--duration-normal);
+}
+
+.transition-fast { transition-duration: var(--duration-fast); }
+.transition-base { transition-duration: var(--duration-base); }
+.transition-normal { transition-duration: var(--duration-normal); }
+.transition-slow { transition-duration: var(--duration-slow); }
+.transition-slower { transition-duration: var(--duration-slower); }
+.transition-slowest { transition-duration: var(--duration-slowest); }
+
+.ease-linear { transition-timing-function: var(--easing-linear); }
+.ease-in { transition-timing-function: var(--easing-ease-in); }
+.ease-out { transition-timing-function: var(--easing-ease-out); }
+.ease-in-out { transition-timing-function: var(--easing-ease-in-out); }
+.ease-spring { transition-timing-function: var(--easing-spring); }
+.ease-gentle { transition-timing-function: var(--easing-gentle); }
+.ease-elegant { transition-timing-function: var(--easing-elegant); }
+.ease-bounce { transition-timing-function: var(--easing-bounce); }
+
+/* ==========================================================================
+   WEDDING-SPECIFIC ANIMATION COMPONENTS
+   ========================================================================== */
+
+/* Hero Entrance Sequence */
+.hero-entrance {
+  opacity: 0;
+}
+
+.hero-entrance.is-loaded .hero-title {
+  animation: var(--animate-fade-in-up);
+  animation-delay: var(--stagger-1);
+}
+
+.hero-entrance.is-loaded .hero-subtitle {
+  animation: var(--animate-fade-in-up);
+  animation-delay: var(--stagger-3);
+}
+
+.hero-entrance.is-loaded .hero-divider {
+  animation: var(--animate-slide-up-reveal);
+  animation-delay: var(--stagger-5);
+}
+
+.hero-entrance.is-loaded .hero-date {
+  animation: var(--animate-fade-in-up);
+  animation-delay: var(--stagger-6);
+}
+
+.hero-entrance.is-loaded .hero-venue {
+  animation: var(--animate-fade-in-up);
+  animation-delay: var(--stagger-7);
+}
+
+/* Couple Names Reveal */
+.couple-names {
+  opacity: 0;
+}
+
+.couple-names.is-loaded .name {
+  animation: var(--animate-fade-in-up);
+}
+
+.couple-names.is-loaded .name-1 { animation-delay: var(--stagger-1); }
+.couple-names.is-loaded .conjunction { animation-delay: var(--stagger-3); animation: var(--animate-scale-in-spring); }
+.couple-names.is-loaded .name-2 { animation-delay: var(--stagger-5); }
+
+/* Countdown Timer Animation */
+.countdown-item {
+  animation: var(--animate-scale-in-spring);
+}
+
+.countdown-item:nth-child(1) { animation-delay: var(--stagger-1); }
+.countdown-item:nth-child(2) { animation-delay: var(--stagger-2); }
+.countdown-item:nth-child(3) { animation-delay: var(--stagger-3); }
+.countdown-item:nth-child(4) { animation-delay: var(--stagger-4); }
+
+/* RSVP Form Field Stagger */
+.rsvp-form .form-field {
+  animation: var(--animate-fade-in-up);
+}
+
+.rsvp-form .form-field:nth-child(1) { animation-delay: var(--stagger-1); }
+.rsvp-form .form-field:nth-child(2) { animation-delay: var(--stagger-2); }
+.rsvp-form .form-field:nth-child(3) { animation-delay: var(--stagger-3); }
+.rsvp-form .form-field:nth-child(4) { animation-delay: var(--stagger-4); }
+.rsvp-form .form-field:nth-child(5) { animation-delay: var(--stagger-5); }
+.rsvp-form .submit-btn { animation-delay: var(--stagger-6); }
+
+/* Gallery Image Reveal */
+.gallery-item {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity var(--duration-slower) var(--easing-gentle),
+              transform var(--duration-slower) var(--easing-gentle);
+}
+
+.gallery-item.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Floating Decorative Elements */
+.floating-element {
+  animation: var(--animate-float-slow);
+}
+
+.floating-element:nth-child(odd) { animation-delay: calc(var(--duration-ambient) / 3); }
+.floating-element:nth-child(even) { animation-delay: calc(var(--duration-ambient) * 2 / 3); }
+
+/* Ambient Gradient Background */
+.ambient-gradient {
+  background: linear-gradient(-45deg,
+    var(--color-surface),
+    var(--color-tertiary),
+    var(--color-secondary),
+    var(--color-primary)
+  );
+  background-size: 400% 400%;
+  animation: var(--animate-gradient-shift);
+}
+
+/* Sparkle Decorations */
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--color-tertiary);
+  border-radius: 50%;
+  opacity: 0;
+  animation: var(--animate-sparkle);
+}
+
+.sparkle:nth-child(1) { animation-delay: 0s; top: 10%; left: 20%; }
+.sparkle:nth-child(2) { animation-delay: 0.5s; top: 30%; left: 80%; }
+.sparkle:nth-child(3) { animation-delay: 1s; top: 60%; left: 10%; }
+.sparkle:nth-child(4) { animation-delay: 1.5s; top: 80%; left: 70%; }
+.sparkle:nth-child(5) { animation-delay: 2s; top: 20%; left: 50%; }
+.sparkle:nth-child(6) { animation-delay: 2.5s; top: 70%; left: 30%; }
+
+/* Heartbeat Pulse (for RSVP button) */
+.heartbeat {
+  animation: var(--animate-breathe);
+}
+
+/* Confetti Animation */
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  opacity: 0;
+  animation: var(--animate-confetti-burst);
+}
+
+/* Line Drawing Animation (for decorative dividers) */
+.drawn-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-line var(--duration-slow) var(--ease-out) forwards;
+}
+
+.drawn-line-delayed {
+  animation-delay: var(--duration-normal);
+}
+
+/* ==========================================================================
+   REDUCED MOTION - Respect user preference
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0.01ms;
+    --duration-fast: 0.01ms;
+    --duration-base: 0.01ms;
+    --duration-normal: 0.01ms;
+    --duration-slow: 0.01ms;
+    --duration-slower: 0.01ms;
+    --duration-slowest: 0.01ms;
+    --duration-ambient: 0.01ms;
+    --duration-ambient-slow: 0.01ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Ensure reveal elements are visible */
+  .reveal,
+  .animate-reveal-up,
+  .animate-reveal-down,
+  .animate-reveal-left,
+  .animate-reveal-right,
+  .animate-reveal-scale,
+  .animate-reveal-rotate,
+  .animate-reveal-blur,
+  .animate-reveal-clip-up,
+  .animate-reveal-clip-down {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: inset(0 0 0 0) !important;
+    animation: none !important;
+  }
+
+  /* Disable ambient animations */
+  .animate-float,
+  .animate-float-slow,
+  .animate-pulse-soft,
+  .animate-pulse-glow,
+  .animate-rotate-slow,
+  .animate-gradient-shift,
+  .animate-sparkle,
+  .animate-breathe,
+  .animate-wave {
+    animation: none !important;
+  }
+
+  /* Disable hover animations */
+  .animate-hover-lift:hover,
+  .animate-hover-scale:hover,
+  .animate-hover-glow:hover {
+    animation: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Hide floating decorative elements */
+  .floating-ornament,
+  .floating-element {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES - Disable animations
+   ========================================================================== */
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   KEYFRAME EXPORTS - For use in JS animation libraries
+   ========================================================================== */
+
+/*
+export const keyframes = {
+  // Entrance
+  fadeIn: { from: { opacity: 0 }, to: { opacity: 1 } },
+  fadeInUp: { from: { opacity: 0, transform: 'translateY(20px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+  fadeInDown: { from: { opacity: 0, transform: 'translateY(-20px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+  fadeInLeft: { from: { opacity: 0, transform: 'translateX(-20px)' }, to: { opacity: 1, transform: 'translateX(0)' } },
+  fadeInRight: { from: { opacity: 0, transform: 'translateX(20px)' }, to: { opacity: 1, transform: 'translateX(0)' } },
+  scaleIn: { from: { opacity: 0, transform: 'scale(0.95)' }, to: { opacity: 1, transform: 'scale(1)' } },
+  scaleInSpring: { '0%': { opacity: 0, transform: 'scale(0.8)' }, '60%': { opacity: 1, transform: 'scale(1.02)' }, '100%': { opacity: 1, transform: 'scale(1)' } },
+  slideUpReveal: { from: { opacity: 0, transform: 'translateY(100%)', clipPath: 'inset(100% 0 0 0)' }, to: { opacity: 1, transform: 'translateY(0)', clipPath: 'inset(0 0 0 0)' } },
+  rotateIn: { from: { opacity: 0, transform: 'rotate(-10deg) scale(0.9)' }, to: { opacity: 1, transform: 'rotate(0) scale(1)' } },
+  flipIn: { from: { opacity: 0, transform: 'rotateY(-90deg) scale(0.9)' }, to: { opacity: 1, transform: 'rotateY(0) scale(1)' } },
+
+  // Exit
+  fadeOut: { from: { opacity: 1 }, to: { opacity: 0 } },
+  fadeOutUp: { from: { opacity: 1, transform: 'translateY(0)' }, to: { opacity: 0, transform: 'translateY(-20px)' } },
+  fadeOutDown: { from: { opacity: 1, transform: 'translateY(0)' }, to: { opacity: 0, transform: 'translateY(20px)' } },
+  scaleOut: { from: { opacity: 1, transform: 'scale(1)' }, to: { opacity: 0, transform: 'scale(0.95)' } },
+
+  // Scroll Reveal
+  revealUp: { from: { opacity: 0, transform: 'translateY(40px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+  revealDown: { from: { opacity: 0, transform: 'translateY(-40px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+  revealLeft: { from: { opacity: 0, transform: 'translateX(-40px)' }, to: { opacity: 1, transform: 'translateX(0)' } },
+  revealRight: { from: { opacity: 0, transform: 'translateX(40px)' }, to: { opacity: 1, transform: 'translateX(0)' } },
+  revealScale: { from: { opacity: 0, transform: 'scale(0.9)' }, to: { opacity: 1, transform: 'scale(1)' } },
+  revealRotate: { from: { opacity: 0, transform: 'rotate(-5deg) scale(0.95)' }, to: { opacity: 1, transform: 'rotate(0) scale(1)' } },
+  revealBlur: { from: { opacity: 0, filter: 'blur(20px)' }, to: { opacity: 1, filter: 'blur(0)' } },
+
+  // Interaction
+  hoverLift: { from: { transform: 'translateY(0)' }, to: { transform: 'translateY(-4px)' } },
+  hoverScale: { from: { transform: 'scale(1)' }, to: { transform: 'scale(1.02)' } },
+  pressScale: { from: { transform: 'scale(1)' }, to: { transform: 'scale(0.98)' } },
+
+  // Ambient
+  float: { '0%, 100%': { transform: 'translateY(0) translateX(0)' }, '25%': { transform: 'translateY(-10px) translateX(5px)' }, '50%': { transform: 'translateY(-5px) translateX(-5px)' }, '75%': { transform: 'translateY(-15px) translateX(3px)' } },
+  floatSlow: { '0%, 100%': { transform: 'translateY(0) translateX(0) rotate(0deg)' }, '33%': { transform: 'translateY(-20px) translateX(10px) rotate(2deg)' }, '66%': { transform: 'translateY(-10px) translateX(-10px) rotate(-2deg)' } },
+  pulseGlow: { '0%, 100%': { boxShadow: '0 0 20px 0 rgba(201,169,98,0.2)' }, '50%': { boxShadow: '0 0 40px 10px rgba(201,169,98,0.4)' } },
+  gradientShift: { '0%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' }, '100%': { backgroundPosition: '0% 50%' } },
+  breathe: { '0%, 100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.02)' } },
+};
+*/
