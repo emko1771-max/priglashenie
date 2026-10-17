@@ -15,6 +15,7 @@
 #ownerEditor.open{display:flex}.editor-card{width:min(540px,100%);max-height:90vh;overflow:auto;background:#fffaf4;color:#40352d;border-radius:20px;padding:24px;box-shadow:0 20px 60px #0004}
 .editor-card h2{margin:0 0 8px;color:#985744;font-size:24px}.editor-card p{line-height:1.5;font-size:14px}.editor-card label{display:block;font-size:13px;margin:12px 0 5px}.editor-card input{width:100%;padding:11px;border:1px solid #ead9c9;border-radius:10px;font-size:15px;box-sizing:border-box;background:white;color:#40352d}.editor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.editor-actions button{border:0;border-radius:999px;padding:11px 16px;cursor:pointer;font-size:14px}.editor-save{background:#bd796b;color:white}.editor-close{background:#eee2d8;color:#40352d}.editor-status{font-size:13px;margin-top:12px;white-space:pre-wrap}
 
+.music-box{width:min(100%,480px);margin:26px auto 0;padding:18px;border:1px solid #ead9c9;border-radius:18px;background:#fffaf4;color:#40352d}.music-box p{margin:0 0 12px;color:#985744;font-size:1.15rem}.music-box #weddingMusicPlayer{width:100%;max-width:360px;min-height:200px;margin:auto}.music-box #weddingMusicPlayer iframe{display:block;width:100%;min-height:200px;border:0;border-radius:12px}.music-box small{display:block;margin-top:10px;line-height:1.5;color:#75685e}
 </style>
 
 <style>
@@ -68,13 +69,30 @@ body.envelope-locked{overflow:hidden}
 <section class="section"><div class="info-grid"><article class="card"><div class="big-icon">♧</div><h3>Белек тууралуу</h3><p>Сиздердин келгениңиздер жана кубанычыбызга ортоктош болгонуңуздар — биз үчүн чоң белек.</p></article><article class="card"><div class="big-icon">☺</div><h3>Көңүлдүү маанай</h3><p>Жылмаюуңуздарды ала келиңиздер. Кечигип келсеңиздер, эң кызыктуу бийди өткөрүп жиберишиңиздер мүмкүн! 😊</p></article></div></section>
 <section class="section" id="faq"><div class="section-heading"><div class="eyebrow">Сиз сурашыңыз мүмкүн</div><h2>Көп берилүүчү суроолор</h2></div><div class="faq"><details><summary>Тойго кечигип келсе болобу? 😄</summary><p>Болот, бирок эң кызыктуу жерин өткөрүп жиберсеңиз, өзүңүз күнөөлүүсүз! Анан «эмне болду?» деп ар бир столдон сурап жүрбөңүз! 😁</p></details><details><summary>Тойго саат канчада келүү керек?</summary><p>Конокторду саат 16:00дөн баштап күтөбүз. Өз убагында келсеңиздер, баарын башынан көрөсүздөр.</p></details><details><summary>Той кайсы жерде өтөт?</summary><p>Той «Салтанат» ресторанында өтөт. Манас шаары, Шабданбай Абдрахманов көчөсү.</p></details><details><summary>Тойдо сүрөткө түшсө болобу?</summary><p>Албетте! Жакшы көз ирмемдерди сүрөткө тартып, кубанычыбызды бирге сактап калалы.</p></details></div></section>
 <section class="rsvp" id="rsvp"><div class="eyebrow">Жообуңузду күтөбүз</div><h2>Тойго келесизби?</h2><p>Биз менен бирге бул өзгөчө күндү белгилөөгө келериңизди билдирип коюңуз.</p><form class="rsvp-form" id="rsvpForm"><input id="guestName" name="guestName" placeholder="Атыңызды жазыңыз" required><select id="attendance" name="attendance"><option value="yes">Ооба, келем! ♡</option><option value="no">Тилекке каршы, келе албайм</option></select><button class="btn" type="submit">Жооп берүү</button></form><p class="rsvp-note" id="rsvpMessage">Эскертүү: бул алдын ала көрүү формасы; жооптор сайттын ээсине автоматтык жөнөтүлбөйт.</p></section>
-<footer class="footer"><div class="brand">Байэл & Мээрим ♡</div><p>22-ноябрь, 2026-жыл · «Салтанат» рестораны</p><p class="petal">Сүйүү менен чакырабыз</p></footer>
+<footer class="footer"><div class="brand">Байэл & Мээрим ♡</div><div class="music-box"><p>Тойдун обону ♡</p><div id="weddingMusicPlayer" aria-label="Тойдун обону YouTube ойноткучу"></div><small>Конвертти ачканда музыка башталат. Кааласаңыз, бул жерден токтото аласыз.</small></div><p>22-ноябрь, 2026-жыл · «Салтанат» рестораны</p><p class="petal">Сүйүү менен чакырабыз</p></footer>
 </main><script>
 (function(){
  const intro=document.getElementById('envelopeIntro');
  const art=document.getElementById('envelopeArt');
  const openBtn=document.getElementById('openInvitation');
- function openEnvelope(){if(intro.classList.contains('opening'))return;intro.classList.add('opening');document.body.classList.remove('envelope-locked');setTimeout(()=>{intro.classList.add('is-opening');setTimeout(()=>intro.remove(),950);},700);}
+ let musicPlayer=null, musicReady=false, musicRequested=false;
+ // YouTube IFrame Player API: song starts on the same guest click that opens the envelope.
+ window.onYouTubeIframeAPIReady=function(){
+   musicPlayer=new YT.Player('weddingMusicPlayer',{
+     width:'360',height:'203',videoId:'Y7dBGjXtLT4',
+     playerVars:{playsinline:1,controls:1,rel:0},
+     events:{onReady:function(event){musicReady=true;if(musicRequested){event.target.playVideo();}},onAutoplayBlocked:function(){console.info('YouTube playback was blocked by browser policy; use the player play button.')}}
+   });
+ };
+ const ytScript=document.createElement('script');ytScript.src='https://www.youtube.com/iframe_api';document.head.appendChild(ytScript);
+ function openEnvelope(){
+   if(intro.classList.contains('opening'))return;
+   // Call playVideo directly inside the click/tap event whenever the player is ready.
+   musicRequested=true;
+   if(musicReady&&musicPlayer){try{musicPlayer.unMute();musicPlayer.setVolume(75);musicPlayer.playVideo();}catch(e){console.warn('Музыка башталбай калды:',e);}}
+   intro.classList.add('opening');document.body.classList.remove('envelope-locked');
+   setTimeout(()=>{intro.classList.add('is-opening');setTimeout(()=>intro.remove(),950);},700);
+ }
  openBtn.addEventListener('click',openEnvelope);art.addEventListener('click',openEnvelope);art.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openEnvelope();}});
 })();
 </script><script>
